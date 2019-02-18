@@ -1,0 +1,67 @@
+body {
+	/*background: url(../images/exam-bgi.jpg) no-repeat center;*/
+	background-attachment: fixed;
+	background-color: rgb(239,246,254);
+}
+
+#index {
+	position: fixed;
+	top: 70px;
+	right: 10px;
+	width: 15%;
+	padding: 10px;
+}
+.dd {
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	text-align: center;
+	margin: 3px;
+}
+.dd:hover {
+	cursor: pointer;
+	background-color: orange;
+}
+.question {
+	background-color: rgb(245,242,240);
+	margin-top: 60px;
+	padding: 20px 30px;
+}
+.pan {
+	width: 90%;
+	font-size: 15px;
+	height: 30px;
+	line-height: 30px;
+	margin: 0 3%;
+	display: inline-block;
+}
+.contain {
+	width: 45%;
+	margin: 0 auto;
+}
+.divi {
+	height: 1px;
+}
+#logo {
+	margin-left: 10%;
+}
+h2 {
+	text-align: center;
+	color: #a0a0a0;
+	margin: 50px 0;
+	padding: 0;
+}
+h3 {
+	text-align: center;
+	color: #a0a0a0;
+	margin: 100px 0;
+	font-size: 27px;
+}
+#cc111{
+	width:80%;
+	margin: 10px auto;
+	height: 100px;
+	display: inline-block;
+	background-color: #fff;
+	margin-left: 10%;
+}

@@ -1,0 +1,78 @@
+body {
+	background: url(../images/student-bgi.jpg);
+	background-attachment: fixed;
+}
+#menu {
+	background-color: rgb(238,110,115);
+	border: 0;
+	height: 64px;
+	margin: 0;
+}
+
+#menu:hover {
+	background-color: rgb(214,99,103)
+}
+.brand-logo {
+	margin-left: 18%;
+}
+.right {
+	margin-right: 15%;
+}
+
+.container .row form i {
+	margin-right: 10px;
+}
+.container .row form label {
+	font-size: 14px;
+	margin: 5px 0;
+	font-weight: 800;
+}
+#oout1,
+#oout2,
+#oout3,
+#changePassword {
+	display: none;
+	margin: 100px auto;
+	background-color: rgb(245,242,240);
+	padding: 50px;
+	z-index: 1;
+}
+
+#confirmChange,
+#cancelChange {
+	display: none;
+	margin: 0 50px;
+}
+#cover
+{
+	display: block;
+	position: fixed;
+	width: 100%;
+	text-align:center;
+	margin-top:14%;
+}
+#cover h1
+{
+	font-weight: bold;
+	font-style: oblique;
+	font-size:200px;
+	font-family: Tahoma;
+	color: #969eab;
+}
+
+#word-content{
+	margin: 100px auto;
+	background-color: rgb(245,242,240);
+	padding: 50px;
+	z-index: 1;
+	height: 420px;
+}
+#english-content{
+	height: 80%;width: 45%;color: black;float: left;
+	font-family: KaiTi;
+	font-size: 50px;
+}
+#chinese-content{
+	height: 80%; width: 45%;color: #000;float: left;margin-left: 5%;	font-size: 50px;
+	font-family: Microsoft Yahei;
+}

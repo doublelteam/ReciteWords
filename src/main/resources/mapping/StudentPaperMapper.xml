@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.db.dao.StudentPaperMapper" >
+  <resultMap id="BaseResultMap" type="com.db.model.StudentPaper" >
+    <id column="student_id" property="studentId" jdbcType="BIGINT" />
+    <id column="paper_id" property="paperId" jdbcType="BIGINT" />
+    <result column="nums" property="nums" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    student_id, paper_id, nums
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.db.model.StudentPaperKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_paper
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and paper_id = #{paperId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.db.model.StudentPaperKey" >
+    delete from student_paper
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and paper_id = #{paperId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.db.model.StudentPaper" >
+    insert into student_paper (student_id, paper_id, nums
+      )
+    values (#{studentId,jdbcType=BIGINT}, #{paperId,jdbcType=BIGINT}, #{nums,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.db.model.StudentPaper" >
+    insert into student_paper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="paperId != null" >
+        paper_id,
+      </if>
+      <if test="nums != null" >
+        nums,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="paperId != null" >
+        #{paperId,jdbcType=BIGINT},
+      </if>
+      <if test="nums != null" >
+        #{nums,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.db.model.StudentPaper" >
+    update student_paper
+    <set >
+      <if test="nums != null" >
+        nums = #{nums,jdbcType=BIGINT},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and paper_id = #{paperId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.db.model.StudentPaper" >
+    update student_paper
+    set nums = #{nums,jdbcType=BIGINT}
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and paper_id = #{paperId,jdbcType=BIGINT}
+  </update>
+  <delete id="delByPaperId" parameterType="java.lang.Long">
+    delete from student_paper
+    where paper_id = #{id}
+  </delete>
+</mapper>

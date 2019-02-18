@@ -1,0 +1,80 @@
+body {
+	background: url(../images/student-bgi.jpg);
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+}
+#menu {
+	background-color: rgb(238,110,115);
+	border: 0;
+	height: 64px;
+	margin: 0;
+	margin-right: 20px;
+}
+#menu:hover {
+	background-color: rgb(214,99,103)
+}
+.brand-logo {
+	margin-left: 18%;
+}
+.right {
+	margin-right: 15%;
+}
+#cover
+{
+	display: block;
+	position: fixed;
+	width: 100%;
+	text-align:center;
+	margin-top:14%;	
+}
+#cover h1
+{
+	font-weight: bold;
+	font-style: oblique;
+	font-size:100px;
+	font-family: Tahoma;
+	color: #969eab;
+}
+
+#oout1,
+#oout2{
+	display: none;
+	margin: 100px auto;
+	background-color: rgb(245,242,240);
+	padding: 30px;
+}
+#oout3{
+	margin: 100px auto;
+	background-color: rgb(245,242,240);
+	padding: 30px;
+}
+
+#default_student,
+#default_teacher{
+	margin-left: 90%;
+}
+
+#addNewTeacher{
+	margin-top: 25px;
+	margin-left: 50px;
+}
+#addNewTeacherFile,
+#getTeacherFile{
+	margin-left: 50px;
+}
+#teacher_file,
+#student_file{
+	margin-top: 5px;
+}
+#addNewStudent{
+	margin-top: 25px;
+}
+#teacher_class_grade2,
+#teacher_class_class2{
+	margin-top: 15px;
+	margin-left: 10px;
+}
+#add_teacher_class{
+	margin-top: 20px;
+	margin-left: 10px;
+}

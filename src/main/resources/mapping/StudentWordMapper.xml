@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.db.dao.StudentWordMapper" >
+  <resultMap id="BaseResultMap" type="com.db.model.StudentWord" >
+    <id column="student_id" property="studentId" jdbcType="BIGINT" />
+    <id column="word_id" property="wordId" jdbcType="BIGINT" />
+    <result column="goal" property="goal" jdbcType="BIT" />
+    <result column="paper_id" property="paperId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    student_id, word_id, goal, paper_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.db.model.StudentWordKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_word
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and word_id = #{wordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.db.model.StudentWordKey" >
+    delete from student_word
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and word_id = #{wordId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.db.model.StudentWord" >
+    insert into student_word (student_id, word_id, goal, 
+      paper_id)
+    values (#{studentId,jdbcType=BIGINT}, #{wordId,jdbcType=BIGINT}, #{goal,jdbcType=BIT}, 
+      #{paperId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.db.model.StudentWord" >
+    insert into student_word
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="wordId != null" >
+        word_id,
+      </if>
+      <if test="goal != null" >
+        goal,
+      </if>
+      <if test="paperId != null" >
+        paper_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="wordId != null" >
+        #{wordId,jdbcType=BIGINT},
+      </if>
+      <if test="goal != null" >
+        #{goal,jdbcType=BIT},
+      </if>
+      <if test="paperId != null" >
+        #{paperId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.db.model.StudentWord" >
+    update student_word
+    <set >
+      <if test="goal != null" >
+        goal = #{goal,jdbcType=BIT},
+      </if>
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and word_id = #{wordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.db.model.StudentWord" >
+    update student_word
+    set goal = #{goal,jdbcType=BIT},
+      paper_id = #{paperId,jdbcType=BIGINT}
+    where student_id = #{studentId,jdbcType=BIGINT}
+      and word_id = #{wordId,jdbcType=BIGINT}
+  </update>
+  <select id="getListBySPId" parameterType="com.db.model.StudentWord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student_word
+    where student_id=#{studentId} and paper_id = #{paperId};
+  </select>
+  <delete id="delByPaperId" parameterType="java.lang.Long">
+    delete from student_word
+    where paper_id = #{id}
+  </delete>
+  <select id="exitRecord" parameterType="com.db.model.StudentWord" resultType="java.lang.Integer">
+    select count(1)
+    from student_word
+    where student_id = #{studentId}
+      and word_id = #{wordId}
+  </select>
+</mapper>

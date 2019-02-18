@@ -1,0 +1,104 @@
+body {
+	background: url(../images/examdetail-bgi.jpg) no-repeat center;
+	background-attachment: fixed;
+}
+.nav-wrapper ul li {
+	padding: 0 20px;
+}
+.nav-wrapper ul {
+	margin-right: 15%;
+}
+#index {
+	position: fixed;
+	top: 160px;
+	right: 4.5%;
+	width: 15%;
+	padding: 10px;
+}
+.dd {
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	text-align: center;
+	margin: 3px;
+}
+.dd:hover {
+	cursor: pointer;
+	background-color: orange;
+}
+.question {
+	background-color: rgb(245,242,240);
+	margin-top: 70px;
+	padding: 20px 30px;
+}
+.pan {
+	width: 90%;
+	font-size: 15px;
+	height: 30px;
+	line-height: 30px;
+	margin: 0 3%;
+	display: inline-block;
+}
+.contain {
+	width: 45%;
+	margin: 0 auto;
+}
+.divi {
+	height: 1px;
+}
+#logo {
+	margin-left: 10%;
+}
+.title {
+	text-align: center;
+	color: #fff;
+	margin: 50px 0;
+	padding: 0;
+}
+.info {
+	font-size: 18px;
+	color: #5f5f5f;
+}
+.true-one {
+	text-align: center;
+	color: green;
+	font-size: 18px;
+	line-height: 1.5em;
+}
+.false-one {
+	text-align: center;
+	color: red;
+	font-size: 18px;
+}
+h3 {
+	text-align: center;
+	color: #fff;
+	margin: 50px 0;
+	font-size: 27px;
+}
+.answer {
+	font-size: 18px;
+	background-color: #fff;
+	margin: 20px 0;
+	text-indent: 3em;
+}
+
+/*固定标题栏*/
+.fixed-title {
+	position: fixed;
+	top: 60px;
+	text-align: center;
+	font-size: 20px;
+	width: 100%;
+	margin: 0;
+	height: 60px;
+	line-height: 60px;
+	z-index: 997;
+}
+.fixed-one {
+	position: fixed;
+	top: 120px;
+	text-align: center;
+	width: 100%;
+	margin: 0;
+}
