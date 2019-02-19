@@ -35,6 +35,10 @@ body {
 	margin: 0 3%;
 	display: inline-block;
 }
+#uu li:hover {
+	cursor: pointer;
+
+}
 .contain {
 	width: 45%;
 	margin: 0 auto;

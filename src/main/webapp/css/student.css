@@ -76,3 +76,29 @@ body {
 	height: 80%; width: 45%;color: #000;float: left;margin-left: 5%;	font-size: 50px;
 	font-family: Microsoft Yahei;
 }
+
+.question {
+	background-color: rgb(245,242,240);
+	padding: 20px 30px;
+}
+.pan {
+	width: 100%;
+	font-size: 18px;
+	height: 30px;
+	line-height: 30px;
+	margin: 0 3% 0 0;
+	display: inline-block;
+	background-color: #fff;
+	text-indent: 2rem;
+}
+#uu li:hover {
+	cursor: pointer;
+
+}
+
+#progress {
+	position: absolute;
+	top: 20px;
+	right: 40px;
+	font-size: 17px;
+}

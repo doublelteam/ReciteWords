@@ -22,6 +22,29 @@ $(document).ready(function(){
 });
 
 
+//请求学生的名字与积分，所需数据如下
+// var data = {
+//     "name" : "学生姓名",
+//     "points" : 100,
+// };
+function getStudentInfo(){
+    $.ajax({
+        url : "/studentInfo",
+        type : "POST",
+        processData : false,
+        contentType : false,
+        success : function (data) {
+            $("#name").text(data.name);
+            $("#points").text(data.points);
+        },
+        error : function () {
+            alert("请求学生信息失败，请刷新页面重试！");
+        }
+    })
+}
+
+
+
 document.getElementById("oout2").style.display = "block";
 
 
@@ -133,9 +156,26 @@ function initExamList(ExamList) {
            dv3.className = "card-content white-text cyan";
             containerDo.appendChild(dv1);
             a.onclick = function() {
+                //加入选择要背的单词数量
+                //传递数据
+                //  {
+                //    "id", "试卷id",
+                //    "num", "要背诵单词数量"
+                //  }
+                var tt = prompt("你想要背多少个单词呢？(不能少于10个）");
+                var reg = /^[0-9]*$/;
+                if(!reg.test(tt)){
+                    alert("请输入数字！");
+                    return false;
+                }
+                if(tt < 10){
+                 alert("选择的单词不能少于10个");
+                }
                 var id = this.parentNode.parentNode.parentNode.getAttribute("examId");
                 var form=new FormData();
                 form.append("id",id);
+                form.append("num",tt);
+                console.log("num::"+tt);
                 console.log("id::"+id);
                 $.ajax({
                     url : "/student/beginExam",

@@ -11,7 +11,7 @@
 	<link rel="shortcut icon" href="../images/logo.ico" type="image/x-icon" />
 	<link rel="bookmark" href="../images/logo.ico" type="image/x-icon" />
 </head>
-<body onload="getExamList()">
+<body onload="getExamList();getStudentInfo()">
 
 	<!-- 导航栏 -->
     <div class="navbar-fixed">
@@ -19,6 +19,8 @@
     	<div class="nav-wrapper">
     		<a href="/student" class="brand-logo">单词贝多芬</a>
     			<ul class="right">
+					<li><a id="name" class="waves-effect" href="#">名字</a></li>
+					<li><a id="points" class="waves-effect" href="#">积分</a></li>
     				<li><a class="waves-effect" href="#modal1">注销</a></li>
     			</ul>
     	</div>
