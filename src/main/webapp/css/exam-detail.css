@@ -52,16 +52,12 @@ body {
 
 
 
-#oout1,
 #oout2,
-#oout3,
-#oout4,
-#oout5,
-#oout6,
 #changePassword,
 #AddExam,
 #Exam_Student,
-#managerStudent {
+#managerStudent,
+#wordlist{
 	display: none;
 	margin: 100px auto;
 	background-color: rgb(245,242,240);
@@ -119,17 +115,24 @@ body {
 #managerStudent>ul li p {
 	text-align: center;
 }
-#studentTable {
-	width: 70%;
-	margin: 0 auto;
+#listTable {
+	width: 65%;
+	margin: 70px auto;
 }
-#studentTable tr,
-#studentTable td,
-#studentTable th{
+
+#listTable caption {
+	margin: 0px auto 20px;
+	font-size: 18px;
+	font-weight: 800;
+}
+
+#listTable tr,
+#listTable td,
+#listTable th{
 	border: 1px solid #000;
 	text-align: center;
 }
-#studentTable a {
+#listTable a {
 	padding: 10px;
 }
 #search-container {
@@ -138,16 +141,3 @@ body {
 	display: block;
 }
 
-#managerStudent div.close {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	width:30px;
-	height: 30px;
-}
-#managerStudent div.close:hover {
-	cursor: pointer;
-}
-#managerStudent div.close i {
-	font-size: 20px;
-}

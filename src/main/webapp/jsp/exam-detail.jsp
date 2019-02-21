@@ -18,7 +18,7 @@
         <a href="/teacher" class="brand-logo"></a>
         <ul class="right">
             <li><a id="name" class="waves-effect" href="#">账号</a> </li>
-            <li><a class='waves-effect' href='#'>返回</a></li>
+            <li><a id="goback" class='waves-effect' href='#'>返回</a></li>
             <li><a class="waves-effect" href="#modal1">注销</a></li>
         </ul>
     </div>
@@ -26,8 +26,22 @@
 
 
 
-<div class="container">
-
+<div class="container" id="wordlist" style="display: block;">
+    <table id="listTable" border="1" style="border: 1px solid #000;text-align: center">
+            <caption id="caption"></caption>
+            <tr>
+                <th>单词</th>
+                <th>释义</th>
+                <th>单词</th>
+                <th>释义</th>
+            </tr>
+            <!-- <tr>
+                <td>banana</td>
+                <td>香蕉</td>
+                <td>apple</td>
+                <td>苹果</td>
+            </tr> -->
+        </table>
 </div>
 <!-- 注销确认 -->
 <div id="modal1" class="modal l6">
@@ -40,7 +54,7 @@
     </div>
 </div>
 <script src="../js/jquery.min.js"></script>
-<script src="../js/materialize.js"></script>
+<script src="../js/materialize.min.js"></script>
 <script src="../js/exam-detail.js"></script>
 </body>
 </html>

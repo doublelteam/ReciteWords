@@ -240,9 +240,8 @@ function getTeacherInfo() {
                 $("#name").html(data.name);
             }
         }
-    })
+    });
 }
-
 
 //修改密码
 var passwordContainer = document.getElementById('changePassword');
