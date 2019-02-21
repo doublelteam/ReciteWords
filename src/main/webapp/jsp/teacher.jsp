@@ -11,16 +11,64 @@
     <link rel="shortcut icon" href="../images/logo.ico" type="image/x-icon" />
     <link rel="bookmark" href="../images/logo.ico" type="image/x-icon" />
 </head>
-<body >
+<body>
 	<!-- 导航栏 -->
 	<nav>
     	<div class="nav-wrapper">
     		<a href="/teacher" class="brand-logo">管理页面</a>
     			<ul class="right">
+					<li><a id="name" class="waves-effect" href="#">账号</a> </li>
+					<li><a class='dropdown-button' href='#' data-activates='dropdown1'>管理系统</a></li>
     				<li><a class="waves-effect" href="#modal1">注销</a></li>
     			</ul>
     	</div>
   	</nav>
+
+
+	<!--下拉菜单-->
+
+	<ul id='dropdown1' class='dropdown-content' style="position: absolute">
+		<li><a id="c_password" class="waves-effect" href="#">修改密码</a></li>
+		<li class="divider"></li>
+		<li><a id="manager" class="waves-effect" href="#">管理学生</a></li>
+		<li class="divider"></li>
+	</ul>
+
+	<%--修改密码--%>
+	<div class="container" id="changePassword">
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s6 push-s3">
+						<i class="icon-user prefix"></i>
+						<input id="oldpassword" type="password" class="validate">
+						<label for="oldpassword">原密码</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6 push-s3">
+						<i class="icon-key prefix"></i>
+						<input id="newpassword" type="password" class="validate"  >
+						<label for="newpassword">新密码</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6 push-s3">
+						<i class="icon-key prefix"></i>
+						<input id="newpassword2" type="password" class="validate"  >
+						<label for="newpassword2">确认新密码</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<!-- <div></div> -->
+					<a href="#" class="col btn push-s3 s2" id="yes">确定</a>
+					<a href="#" class="col btn s2 push-s4" id="cancel">取消</a>
+				</div>
+			</form>
+		</div>
+	</div>
   	<!-- 注销确认 -->
   	<div id="modal1" class="modal l6">
     	<div class="modal-content">
@@ -40,7 +88,7 @@
 		<div class="row">
 			<h4><i class="icon-files-empty"></i> 词库</h4>
         </div>
-    <a class="waves-effect waves-light btn" href="javascript:$('#file').click()"  id="CreateExam"><i class="icon-plus left"></i>添加新的词库</a>
+    	<a class="waves-effect waves-light btn" href="javascript:$('#file').click()"  id="CreateExam"><i class="icon-plus left"></i>添加新的词库</a>
         <a class="waves-effect waves-light btn" href="/template/words.xlsx" >导出词库文件模板</a>
         <form id="uploadForm" class="row" style="display: none" enctype="multipart/form-data" method="post" action="/teacher/uploadwords">
         <input type="file" name="file" id="file" accept=".xlsx" style="display: none" onchange="uploadWords()">
@@ -48,6 +96,39 @@
     </div>
 
 
+	<%--管理学生--%>
+	<div class="container" id="managerStudent">
+
+		<div class="close">
+			<i class="icon-switch"></i>
+		</div>
+		<div class="row">
+			<h4><i class="icon-files-empty"></i> 学生信息</h4>
+		</div>
+
+		<div id="search-container">
+			<input id="input" type="text" placeholder="输入要搜索或添加的账号"/>
+			<a id="search" class="btn waves-effect">搜索</a>
+			<a id="add" class="btn waves-effect">添加账号</a>
+		</div>
+
+		<table id="studentTable" border="1" style="border: 1px solid #000;text-align: center">
+			<tr>
+				<th>账号</th>
+				<th>积分</th>
+				<th>操作</th>
+			</tr>
+			<%--<tr>--%>
+				<%--<td>yy123</td>--%>
+				<%--<td>100分</td>--%>
+				<%--<td>--%>
+					<%--<a class="modify" href="#">修改积分</a>--%>
+					<%--<a class="delete" href="#">删除</a>--%>
+					<%--<a class="reset" href="#">重置密码</a>--%>
+				<%--</td>--%>
+			<%--</tr>--%>
+		</table>
+	</div>
 
 
   <script src="../js/jquery.min.js"></script>

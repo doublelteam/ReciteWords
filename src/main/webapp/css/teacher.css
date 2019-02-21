@@ -43,11 +43,6 @@ body {
 	font-weight: 800;
 }
 
-#choose,
-#TF,
-#aksquestion{
-	margin-left: 30px;
-}
 
 #confirmChange,
 #cancelChange {
@@ -55,22 +50,7 @@ body {
 	margin: 0 50px;
 }
 
-#l_A,
-#l_B,
-#l_C,
-#l_D,
-#l_T,
-#l_F,
-#l_A2,
-#l_B2,
-#l_C2,
-#l_D2,
-#l_T2,
-#l_F2
-{
-	margin-left: 20px;
-	margin-right: 5px;
-}
+
 
 #oout1,
 #oout2,
@@ -80,11 +60,14 @@ body {
 #oout6,
 #changePassword,
 #AddExam,
-#Exam_Student {	
+#Exam_Student,
+#managerStudent {
 	display: none;
 	margin: 100px auto;
 	background-color: rgb(245,242,240);
 	padding: 30px;
+	overflow: hidden;
+	position: relative;
 }
 
 .stone{
@@ -132,4 +115,39 @@ body {
 }
 .onclick {
 	background-color: rgb(100,200,200);
+}
+#managerStudent>ul li p {
+	text-align: center;
+}
+#studentTable {
+	width: 70%;
+	margin: 0 auto;
+}
+#studentTable tr,
+#studentTable td,
+#studentTable th{
+	border: 1px solid #000;
+	text-align: center;
+}
+#studentTable a {
+	padding: 10px;
+}
+#search-container {
+	width: 20%;
+	float: right;
+	display: block;
+}
+
+#managerStudent div.close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width:30px;
+	height: 30px;
+}
+#managerStudent div.close:hover {
+	cursor: pointer;
+}
+#managerStudent div.close i {
+	font-size: 20px;
 }

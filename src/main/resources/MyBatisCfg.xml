@@ -22,19 +22,4 @@
     <typeAliases>
         <package name="com.db.model" />
     </typeAliases>
-    <!--
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"></transactionManager>
-            <dataSource type="POOLED">
-                <property name="driver" value="${mysql.driver}" />
-                <property name="url" value="${mysql.url}" />
-                <property name="username" value="${mysql.uid}" />
-                <property name="password" value="${mysql.password}" />
-            </dataSource>
-        </environment>
-    </environments>
-    <mappers>
-        <mapper resource="com/lzw/ssm/mapper/GoodsMapper.xml" />
-    </mappers>-->
 </configuration>
