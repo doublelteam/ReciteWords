@@ -113,7 +113,5 @@ insert  into `words`(`id`,`english`,`chinese`,`paper_id`) values (1852,'funniest
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-/*
-Add student points;
-*/
+/* Add student points; */;
 ALTER TABLE student ADD COLUMN points BIGINT;

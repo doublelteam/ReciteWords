@@ -5,9 +5,10 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="account" property="account" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="points" property="points" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, account, password
+    id, account, password, points
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -20,10 +21,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.db.model.Student" >
-    insert into student (id, account, password
-      )
-    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
-      )
+    insert into student (id, account, password, 
+      points)
+    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{points,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.db.model.Student" >
     insert into student
@@ -37,6 +38,9 @@
       <if test="password != null" >
         password,
       </if>
+      <if test="points != null" >
+        points,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -47,6 +51,9 @@
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="points != null" >
+        #{points,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -59,15 +66,20 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="points != null" >
+        points = #{points,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.db.model.Student" >
     update student
     set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
+      password = #{password,jdbcType=VARCHAR},
+      points = #{points,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
   <select id="selectByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

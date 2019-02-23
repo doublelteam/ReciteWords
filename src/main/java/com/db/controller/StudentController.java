@@ -6,6 +6,7 @@ import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.shiro.crypto.hash.Hash;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STUnderline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,27 +36,6 @@ public class StudentController {
     @Autowired
     private StudentPaperMapper studentPaperDao;
 
-//    var ExamList = [
-//    {
-//        "Type" : "done",
-//            "title" : "数据库测试1",
-//            "start" : "2018-09-01 22:08",
-//            "end" : "2018-09-01 23:08",
-//            "id" : "123",
-//            "grade" : "85",
-//    },
-//{
-//    "Type" : "do",
-//        "title" : "数据库测试2",
-//        "start" : "2018-09-01 22:08",
-//        "end" : "2018-09-01 23:08",
-//        "id" : "456",
-//}];
-//{"Type":"do",
-//        "title":"第一章至第三章",
-//        "start":"2018-12-06 09:30",
-//        "end":"2018-12-06 10:00",
-//        "id":"1"}
 
     @RequestMapping(value ="/getExamList",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
@@ -99,6 +79,24 @@ public class StudentController {
         session.setAttribute("paperId",paperId);
         result.put("code","success");
         return result;
+    }
+
+    @RequestMapping("/studentInfo")
+    @ResponseBody
+    public Object getStudentInfo(HttpServletRequest request){
+        JSONObject result=new JSONObject();
+        HttpSession session=request.getSession();
+        String account=session.getAttribute("username").toString();
+        Student student=studentDao.selectByAccount(account);
+        if (student!=null){
+            result.put("code","success");
+            result.put("name",student.getAccount());
+            result.put("points",student.getPoints());
+        }
+        else {
+            result.put("code","false");
+        }
+        return  result;
     }
 
 }

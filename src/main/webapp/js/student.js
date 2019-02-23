@@ -29,13 +29,18 @@ $(document).ready(function(){
 // };
 function getStudentInfo(){
     $.ajax({
-        url : "/studentInfo",
+        url : "/student/studentInfo",
         type : "POST",
         processData : false,
         contentType : false,
         success : function (data) {
-            $("#name").text(data.name);
-            $("#points").text(data.points);
+            if (data.code=="success"){
+                $("#name").text(data.name);
+                $("#points").text(data.points);
+            }else {
+                alert("请求学生信息失败，请刷新页面重试！");
+            }
+
         },
         error : function () {
             alert("请求学生信息失败，请刷新页面重试！");

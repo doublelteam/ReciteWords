@@ -7,6 +7,8 @@ public class Student {
 
     private String password;
 
+    private Long points;
+
     public Long getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Long getPoints() {
+        return points;
+    }
+
+    public void setPoints(Long points) {
+        this.points = points;
     }
 }

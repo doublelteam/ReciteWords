@@ -61,7 +61,6 @@ public class LoginController {
             }
         }
 
-
         if (student!=null||teacher!=null){
             HttpSession session=request.getSession();
             session.setAttribute("username",username);
