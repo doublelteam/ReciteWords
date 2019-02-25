@@ -1,3 +1,39 @@
+//启动模态
+$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+    $("#modal2").modal({
+        ready : function(){
+            var t = $("#input").val();
+            t = t.replace(/[^\w\.\/]/ig,'');
+            if(t){
+                $("#userName").val(t);
+            }
+        }
+    });
+    $('#modal1').modal({
+            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+            opacity: .5, // Opacity of modal background
+            in_duration: 300, // Transition in duration
+            out_duration: 200, // Transition out duration
+            starting_top: '33%', // Starting top style attribute
+            ending_top: '40%', // Ending top style attribute
+            // ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+            //     // alert("Ready");
+            //     // console.log(modal, trigger);
+            //     // console.log("bbb");
+            // },
+            complete: function() {
+                $("#password").val(" ");
+                $("#userName").val(" ");
+                $(".managerPass").css("display","none");
+                // console.log("dasdasd");
+            } // Callback for Modal close
+        }
+    );
+});
+
+
 
 var ManagerPassword;
 
@@ -237,9 +273,9 @@ function getTeacherInfo() {
         contentType : false,
         success : function (data) {
             if(data.code == "success"){
-                $("#name").html(data.name);
-            }else {
-                alert("获取教师信息失败，请重新登陆");
+                $("#name").html("账号:" + data.name);
+            }else{
+                alert("获取教师信息失败，请重新登录");
             }
         }
     });
@@ -434,7 +470,7 @@ function initStudentTable(data) {
 }
 
 // initStudentTable(testData);
-
+//
 var cacheDate = [];
 // for (var i = 0; i < testData.length; i++){
 //     cacheDate[i] = testData[i];
@@ -624,53 +660,84 @@ $("#search").click(search);
 
 //添加账号
 function add() {
-
-    var id = $("#input").val();
+    var id = $("#userName").val();
     if(!id){
-        alert("账号不能为空！");
+        alert("请输入账号！")
         return false;
     }
-    var password = prompt("请输入账号密码");
-    var type;
+
+    var password = $("#password").val();
     if( !checkPassword(password) ){
         alert("密码位数需6-20位！");
         return false;
     }
-    if(confirm("是否添加新的账号" + id + "密码为" + password) != true)
-        return false;
-    if(confirm("是否添加为教师账号？否则为学生账号")){
-        var t = prompt("请输入管理密码");
-        if(!ManagerPassword){
-            alert("无法进行密码验证。请刷新页面重试");
-            return false;
-        }
-        if(t == ManagerPassword)
-            tpye = "teacher";
-        else{
-            alert("管理密码错误！");
-            return false;
-        }
-    }
-    else
+    var type;
+    var op2 = document.getElementById("type").getElementsByTagName("option");
+    if(op2[1].selected == true)
+        type = "teacher";
+    else if(op2[2].selected == true)
         type = "student";
+    else
+        alert("请选择账号类型！");
+
+
+    if(type == "teacher"){
+        var managerPa = $("#managerPassword").val();
+        if(managerPa != ManagerPassword)
+            return false;
+    }
+
     var form = new FormData();
     form.append("id",id);
     form.append("password",password);
     form.append("type",type);
     $.ajax({
-        url : "/teacher/addStudent",
+        url : "/teacher/addNew",
         type : "POST",
         data : form,
         processData : false,
         contentType : false,
         success : function (result) {
             if(result.code == 1){
-                alert("添加账号成功，初始化密码为123456！")
+                alert("添加账号" + id + "成功，密码为" + password +"！");
             }
         }
     });
 }
-$("#add").click(add);
+
+//设置select标签变化事件，id为type
+document.getElementById("type").onchange = function () {
+   for (var i = 0; i < this.children.length; i++){
+       if(this.children[i].selected == true && this.children[i].innerHTML == "教师"){
+           $(".managerPass").css("display","block");
+           break;
+       }
+       else
+           $(".managerPass").css("display","none");
+   }
+};
+
+// 密码可见眼睛
+$("#eye").click(function(){
+    var password = document.getElementById("password");
+    if(password.type == "password"){
+        password.type = "text";
+    }
+    else
+        password.type = "password";
+    // console.log("aaa");
+});
+
+//管理密码可见的眼睛
+$("#eye2").click(function(){
+    var password = document.getElementById("managerPassword");
+    if(password.type == "password"){
+        password.type = "text";
+    }
+    else
+        password.type = "password";
+    // console.log("aaa");
+});
 
 window.onload=function () {
     getInfo();

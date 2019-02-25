@@ -34,13 +34,13 @@ function getStudentInfo(){
         processData : false,
         contentType : false,
         success : function (data) {
-            if (data.code=="success"){
-                $("#name").text(data.name);
-                $("#points").text(data.points);
-            }else {
+            if(data.code == "success"){
+                $("#name").text("账号：" + data.name);
+                $("#points").text("积分：" + data.points);
+            }else{
                 alert("请求学生信息失败，请刷新页面重试！");
             }
-
+            
         },
         error : function () {
             alert("请求学生信息失败，请刷新页面重试！");
@@ -145,7 +145,7 @@ function initExamList(ExamList) {
         dv2.appendChild(dv4);
     
         var a = document.createElement("a");
-        a.href = "#";
+        a.href = "#modal2";
         dv4.appendChild(a);
         var a2 = document.createElement("a");
         a2.href="#";
@@ -158,51 +158,72 @@ function initExamList(ExamList) {
             a.innerHTML = "开始背单词";
             // a2.innerHTML="复习错题";
             // a3.innerHTML="重新开始"
-           dv3.className = "card-content white-text cyan";
+            dv3.className = "card-content white-text cyan";
             containerDo.appendChild(dv1);
-            a.onclick = function() {
-                //加入选择要背的单词数量
-                //传递数据
-                //  {
-                //    "id", "试卷id",
-                //    "num", "要背诵单词数量"
-                //  }
-                var tt = prompt("你想要背多少个单词呢？(不能少于10个）");
-                var reg = /^[0-9]*$/;
-                if(!reg.test(tt)){
-                    alert("请输入数字！");
-                    return false;
-                }
-                if(tt < 10){
-                 alert("选择的单词不能少于10个");
-                }
+            a.class = "modal-trigger waves-effect waves-light";
+            a.onclick = function(){
+                $("#modal2").attr("examId","");
                 var id = this.parentNode.parentNode.parentNode.getAttribute("examId");
-                var form=new FormData();
-                form.append("id",id);
-                form.append("num",tt);
-                console.log("num::"+tt);
-                console.log("id::"+id);
-                $.ajax({
-                    url : "/student/beginExam",
-                    type : "POST",
-                    data : form,
-                    processData : false,
-                    contentType : false,
-                    dataType : "json",
-                    success : function(result) {
-                        if (result.code=="success")
-                        //成功则在新页面加载试卷。需要根据试卷ID返回试卷信息给考试页面。
-                            window.location.href="/exam";
-                        else
-                            alert(result.msg);
-                    },
-                    error : function() {
-                        alert("进入失败，请重试");
-                    }
-                });
+                $("#modal2").attr("examId",id);
+                console.log("设置ID" + id);
+
+                var op = document.getElementById("modal2").getElementsByTagName("option");
+                for (var i = 0; i < op.length; i++){
+                    if(op[i].selected == true)
+                        op[i].selected = false;
+                }
+                console.log(op[0]);
+                op[0].selected = true;
             }
         }
     }
+}
+
+ function gotoExam(){
+    //加入选择要背的单词数量
+    //传递数据
+    //  {
+    //    "id", "试卷id",
+    //    "num", "要背诵单词数量"
+    //  }
+     var id = $("#modal2").attr("examId");
+     var num;
+    var op = document.getElementById("modal2").getElementsByTagName("option");
+    for (var i = 0; i < op.length; i++){
+        if(i != 1 && op[i].selected == true){
+            num = op[i].innerHTML;
+            break;
+        }
+    }
+    if(!num){
+        alert("请选择单词数量！");
+        return false;
+    }
+
+    var form=new FormData();
+    form.append("id",id);
+    form.append("num",num);
+    console.log("num::"+num);
+    console.log("id::"+id);
+    // return false;
+    $.ajax({
+        url : "/student/beginExam",
+        type : "POST",
+        data : form,
+        processData : false,
+        contentType : false,
+        dataType : "json",
+        success : function(result) {
+            if (result.code=="success")
+            //成功则在新页面加载试卷。需要根据试卷ID返回试卷信息给考试页面。
+                window.location.href="/exam";
+            else
+                alert(result.msg);
+        },
+        error : function() {
+            alert("进入失败，请重试");
+        }
+    });
 }
 
 // initExamList(ExamList);//前端测试用，后台写完可以删除，包括上面的数据ExamList

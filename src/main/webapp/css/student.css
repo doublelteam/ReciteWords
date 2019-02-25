@@ -102,3 +102,8 @@ body {
 	right: 40px;
 	font-size: 17px;
 }
+
+select {
+	margin: 0 auto;
+	background-color: #FFFFFF;
+}

@@ -66,7 +66,30 @@
       	</div>
 	</div>
 
+	<!-- Modal Trigger -->
+	<%--<a class="modal-trigger waves-effect waves-light btn" href="#modal1">模态</a>--%>
 
+	<!-- Modal Structure -->
+	<div id="modal2" class="modal">
+		<div class="modal-content">
+			<h4>选择背诵单词数量</h4>
+		</div>
+		<div class="input-field col s12">
+			<select style="display: block;width: 50%;">
+				<option value="" disabled selected>请选择数量</option>
+				<option>10</option>
+				<option>20</option>
+				<option>30</option>
+				<option>40</option>
+				<option>50</option>
+				<option>60</option>
+				<option>70</option>
+			</select>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat btn" onclick="gotoExam()">确定</a>
+		</div>
+	</div>
 
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>

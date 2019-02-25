@@ -19,7 +19,7 @@
     			<ul class="right">
 					<li><a id="name" class="waves-effect" href="#">账号</a> </li>
 					<li><a class='dropdown-button' href='#' data-activates='dropdown1'>管理系统</a></li>
-    				<li><a class="waves-effect" href="#modal1">注销</a></li>
+    				<li><a class="waves-effect" href="#modal3">注销</a></li>
     			</ul>
     	</div>
   	</nav>
@@ -69,8 +69,11 @@
 			</form>
 		</div>
 	</div>
+
+
+
   	<!-- 注销确认 -->
-  	<div id="modal1" class="modal l6">
+  	<div id="modal3" class="modal l6">
     	<div class="modal-content">
       		<h6>你确定退出当前账号吗？</h6>
     	</div>
@@ -82,6 +85,66 @@
 
 
 
+	<%--添加学生--%>
+	<div id="modal2" class="modal l6">
+		<h5 style="text-align: center;margin: 20px 0;">请输入要添加的账号及密码</h5>
+		<div class="modal-content" style="width: 70%;margin: 0 auto;">
+
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="icon-user prefix"></i>
+					<input id="userName" type="text" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
+					<label for="userName">用户名</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="icon-key prefix"></i>
+					<input id="password" type="password" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
+					<label for="password">密码</label>
+					<div id="eye" class="eye"><i class="icon-eye"></i></div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="span icon-accessibility prefix"></i>
+					<select name="" id="type" style="display: inline-block;">
+						<option value="" selected disabled>请选择添加账号的类型</option>
+						<option value="">教师</option>
+						<option value="">学生</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row managerPass" style="display: none;">
+				<div class="input-field col s12">
+					<i class="icon-key prefix"></i>
+					<input id="managerPassword" type="password" onkeyup="value=value.replace(/[^\w\\/]/ig,'')">
+					<label for="managerPassword">管理密码</label>
+					<div id="eye2" class="eye"><i class="icon-eye"></i></div>
+				</div>
+			</div>
+
+		</div>
+		<div class="modal-footer">
+			<a href="#modal1" class="col s8 btn modal-action modal-close waves-effect waves-green">确定</a>
+			<%--<a href="#!" class="btn modal-action modal-close waves-effect waves-green push-s3">取消</a>--%>
+		</div>
+	</div>
+
+
+	<%--确认添加--%>
+	<div id="modal1" class="modal l6">
+		<div class="modal-content">
+			<h6>请确认已经完整输入信息，信息已经填完了吗？</h6>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="add()">确定</a>
+			<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">取消</a>
+		</div>
+	</div>
 
   	<!-- 创建/发布考试 -->
   	<div class="container" id="oout2" style="display: block">
@@ -109,7 +172,7 @@
 		<div id="search-container">
 			<input id="input" type="text" placeholder="输入要搜索或添加的账号"/>
 			<a id="search" class="btn waves-effect">搜索</a>
-			<a id="add" class="btn waves-effect">添加账号</a>
+			<a id="add" class="btn waves-effect" href="#modal2">添加账号</a>
 		</div>
 
 		<table id="studentTable" border="1" style="border: 1px solid #000;text-align: center">
@@ -130,7 +193,7 @@
 		</table>
 	</div>
 
-	<a href="#" id="goback">对对对</a>
+
   <script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>
   <script src="../js/teacher.js"></script>
