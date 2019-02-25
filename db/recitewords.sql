@@ -115,3 +115,6 @@ insert  into `words`(`id`,`english`,`chinese`,`paper_id`) values (1852,'funniest
 
 /* Add student points; */;
 ALTER TABLE student ADD COLUMN points BIGINT;
+
+/* add managerpassword */
+INSERT  INTO `teacher`(`account`,`password`) VALUES ('managerpassword','123456');

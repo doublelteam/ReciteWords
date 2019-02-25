@@ -1,10 +1,9 @@
 package com.db.controller;
 
 import com.db.dao.*;
-import com.db.model.Paper;
-import com.db.model.StudentPaper;
-import com.db.model.Words;
+import com.db.model.*;
 import com.db.util.ExcelUtil;
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,85 @@ public class TeacherController {
     private StudentWordMapper studentWordDao;
     @Autowired
     private StudentPaperMapper studentPaperDao;
+    @Autowired
+    private StudentMapper studentDao;
+
+
+    @RequestMapping("/getTeacherInfo")
+    @ResponseBody
+    public Object getInfo(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        JSONObject result=new JSONObject();
+        if (session.getAttribute("username")!=null&& session.getAttribute("role").toString().equals("teacher")){
+            result.put("name",session.getAttribute("username").toString());
+            result.put("code","success");
+        }
+        return result;
+    }
+
+    @RequestMapping("/getAllStudents")
+    @ResponseBody
+    public Object getAllStudents(HttpServletRequest request){
+        JSONArray result=new JSONArray();
+        HttpSession session=request.getSession();
+        if (session.getAttribute("username")!=null&& session.getAttribute("role").toString().equals("teacher")){
+            List<Student> studentList=studentDao.getAllStudents();
+            for (Student st:studentList){
+                JSONObject js=new JSONObject();
+                js.put("id",st.getAccount());
+                js.put("point",st.getPoints());
+                result.add(js);
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping("/getManagerPassword")
+    @ResponseBody
+    public Object getManagerPassword(HttpServletRequest request){
+        JSONObject result=new JSONObject();
+        HttpSession session=request.getSession();
+        if (session.getAttribute("username")!=null&& session.getAttribute("role").toString().equals("teacher")) {
+            Teacher teacher=teacherDao.selectByAccount("managerpassword");
+            result.put("password",teacher.getPassword());
+        }
+        return result;
+    }
+
+
+    @RequestMapping("/changePassword")
+    @ResponseBody
+    public Object changePassword(@RequestParam("oldpassword") String old,@RequestParam("newpassword") String ne,HttpServletRequest request){
+        JSONObject result=new JSONObject();
+        HttpSession session=request.getSession();
+        String account=session.getAttribute("username").toString();
+        Teacher teacher=teacherDao.selectByAccount(account);
+        if (!teacher.getPassword().equals(old)){
+            result.put("code","false");
+        }
+        else {
+            teacher.setPassword(ne);
+            if (teacherDao.updateByPrimaryKeySelective(teacher)!=1)
+                result.put("code","false");
+            else
+                result.put("code","success");
+        }
+        return result;
+    }
+
+    @RequestMapping("/changePoints")
+    @ResponseBody
+    public Object changePoint(@RequestParam("id")String id,@RequestParam("newPoint")String newPoint){
+        JSONObject result=new JSONObject();
+        Student student=studentDao.selectByAccount(id);
+        student.setPoints(Long.valueOf(newPoint));
+        if (studentDao.updateByPrimaryKeySelective(student)==1)
+            result.put("code","success");
+        else
+            result.put("code","false");
+        return result;
+    }
+
 
 
 
@@ -44,18 +122,21 @@ public class TeacherController {
     public Object getExamList(HttpServletRequest request){
         JSONArray result=new JSONArray();
         HttpSession session=request.getSession();
-        List<Paper> paperList=paperDao.getList();
-        for (Paper p:paperList){
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.put("Type","do");
-            jsonObject.put("title",p.getName());
-            jsonObject.put("nums",p.getNums());
-            jsonObject.put("start","0");
-            jsonObject.put("end","0");
-            jsonObject.put("id",String.valueOf(p.getId()));
-            jsonObject.put("grade",0);
-            result.add(jsonObject);
+        if (session.getAttribute("username")!=null&& session.getAttribute("role").toString().equals("teacher")){
+            List<Paper> paperList=paperDao.getList();
+            for (Paper p:paperList){
+                JSONObject jsonObject=new JSONObject();
+                jsonObject.put("Type","do");
+                jsonObject.put("title",p.getName());
+                jsonObject.put("nums",p.getNums());
+                jsonObject.put("start","0");
+                jsonObject.put("end","0");
+                jsonObject.put("id",String.valueOf(p.getId()));
+                jsonObject.put("grade",0);
+                result.add(jsonObject);
+            }
         }
+
         return result;
     }
 

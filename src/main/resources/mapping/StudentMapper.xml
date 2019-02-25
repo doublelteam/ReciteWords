@@ -86,4 +86,10 @@
     from student
     where account = #{account}
   </select>
+
+  <select id="getAllStudents" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+  </select>
 </mapper>

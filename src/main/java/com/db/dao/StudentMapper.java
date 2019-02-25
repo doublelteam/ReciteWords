@@ -3,6 +3,8 @@ package com.db.dao;
 import com.db.model.Student;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("studentDao")
 public interface StudentMapper {
     int deleteByPrimaryKey(Long id);
@@ -18,4 +20,6 @@ public interface StudentMapper {
     int updateByPrimaryKey(Student record);
 
     Student selectByAccount(String account);
+
+    List<Student> getAllStudents();
 }

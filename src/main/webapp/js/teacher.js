@@ -236,8 +236,10 @@ function getTeacherInfo() {
         processData : false,
         contentType : false,
         success : function (data) {
-            if(data.code == 1){
+            if(data.code == "success"){
                 $("#name").html(data.name);
+            }else {
+                alert("获取教师信息失败，请重新登陆");
             }
         }
     });
@@ -464,8 +466,8 @@ function getManagerPassword() {
         type : "POST",
         processData : false,
         contentType : false,
-        success : function (password) {
-            ManagerPassword = password;
+        success : function (data) {
+            ManagerPassword = data.password;
         }
     });
 }
@@ -509,7 +511,7 @@ function modify() {
         processData : false,
         contentType : false,
         success : function (result) {
-            if(result.code == 1){
+            if(result.code == "success"){
                 alert("修改积分成功！");
                 getAllStudents();
             }
@@ -656,7 +658,7 @@ function add() {
     form.append("password",password);
     form.append("type",type);
     $.ajax({
-        url : "/teacher/addNew",
+        url : "/teacher/addStudent",
         type : "POST",
         data : form,
         processData : false,
@@ -674,6 +676,7 @@ window.onload=function () {
     getInfo();
     getManagerPassword();
     getAllStudents();
+    getTeacherInfo();
 }
 
 //关闭学生管理页面
