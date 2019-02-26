@@ -803,6 +803,7 @@ window.onload=function () {
     getManagerPassword();
     getAllStudents();
     getTeacherInfo();
+    getRecord();
 };
 
 //关闭学生管理页面
