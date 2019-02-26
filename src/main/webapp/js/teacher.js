@@ -3,12 +3,17 @@ $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
     $("#modal2").modal({
-        ready : function(){
+        ready : function() {
             var t = $("#input").val();
-            t = t.replace(/[^\w\.\/]/ig,'');
-            if(t){
+            t = t.replace(/[^\w\.\/]/ig, '');
+            if (t) {
                 $("#userName").val(t);
             }
+        },
+        complete : function () {
+            $("#modal2 div span").css("display","none");
+            selectflag = 0;
+            console.log(11312);
         }
     });
     $('#modal1').modal({
@@ -286,6 +291,7 @@ var passwordContainer = document.getElementById('changePassword');
 document.getElementById('c_password').onclick = function(){
     $("#oout2").fadeOut(500);
     $("#managerStudent").fadeOut(500);
+    $("#record").fadeOut(500);
     $(passwordContainer).fadeIn(500);
 }
 
@@ -401,6 +407,7 @@ var testData = [
 $("#manager").click(function () {
     $("#oout2").fadeOut(500);
     $("#changePassword").fadeOut(500);
+    $("#record").fadeOut(500);
     $("#managerStudent").fadeIn(500);
     $("#oldpassword").val("");
     $("#newpassword").val("");
@@ -658,6 +665,52 @@ function search() {
 }
 $("#search").click(search);
 
+$("#modal2 div input").bind("blur",function () {
+    var t = this.value;
+    var span = this.parentNode.children[4];
+    var nameflag = 1;
+    var passwordflag = 1;
+    var managerflag = 1;
+   if(this.id == "userName") {
+        if(!t){
+            span = this.parentNode.children[3];
+            span.innerHTML = "账号不能为空！";
+            span.style.color = "red";
+            $(span).fadeIn(200);
+            nameflag = 0;
+        }
+   }
+   if(this.id == "password"){
+        if(!checkPassword(t)){
+            span.innerHTML = "密码位数需6-20位！";
+            span.style.color = "red";
+            $(span).fadeIn(200);
+            passwordflag = 0;
+        }
+   }
+   if(this.id == "managerPassword"){
+       if(!t){
+           span.innerHTML = "管理密码不能为空！";
+           span.style.color = "red";
+           $(span).fadeIn(200);
+           managerflag = 0;
+       }
+   }
+   var btn = $("#modal2 div a");
+   if(nameflag == 1 && managerflag == 1 && passwordflag == 1 && selectflag == 1){
+       btn.removeAttr("disabled");
+   }else{
+       btn.attr("disabled","true");
+   }
+});
+
+$("#modal2 div input").bind("focus",function () {
+    var span = this.parentNode.children[4];
+    if(!span)
+        span = this.parentNode.children[3];
+    $(span).fadeOut(200);
+});
+
 //添加账号
 function add() {
     var id = $("#userName").val();
@@ -706,14 +759,20 @@ function add() {
 }
 
 //设置select标签变化事件，id为type
+var selectflag = 0;
 document.getElementById("type").onchange = function () {
    for (var i = 0; i < this.children.length; i++){
        if(this.children[i].selected == true && this.children[i].innerHTML == "教师"){
            $(".managerPass").css("display","block");
+           $("#modal2 div a").attr("disabled","true");
+           selectflag = 1;
            break;
        }
-       else
+       else{
            $(".managerPass").css("display","none");
+           $(".managerPass input").val("");
+           $("#modal2 div a").removeAttr("disabled");
+       }
    }
 };
 
@@ -744,11 +803,119 @@ window.onload=function () {
     getManagerPassword();
     getAllStudents();
     getTeacherInfo();
-}
+};
 
 //关闭学生管理页面
 $("div[class = close]").click(function () {
     $("#changePassword").fadeOut(500);
     $("#managerStudent").fadeOut(500);
+    $("#record").fadeOut(500);
     $("#oout2").fadeIn(500);
 });
+
+              //查询积分修改记录相关代码
+
+
+//关闭积分修改查询页面
+$("div[class=close2]").click(function () {
+    $("#changePassword").fadeOut(500);
+    $("#managerStudent").fadeOut(500);
+    $("#record").fadeOut(500);
+    $("#oout2").fadeIn(500);
+});
+
+$("#query").click(function () {
+   $("#changePassord").fadeOut(500);
+   $("#managerStudent").fadeOut(500);
+   $("#oout2").fadeOut(500);
+   $("#changePassword input").val("");
+   // console.log("dasds");
+   $("#record").fadeIn(500);
+   getRecord();
+});
+
+//查询记录数据
+var recordData = [
+    {
+        "time" : "2017-01-01",
+        "ip" : "127.201.203.200",
+        "personDo" : "呜呜呜呜",
+        "personDone" : "哈哈哈哈",
+        "oldRecord" : "100",
+        "newRecord" : "200:"
+    },
+    {
+        "time" : "2017-01-01",
+        "ip" : "127.201.203.200",
+        "personDo" : "呜呜呜呜",
+        "personDone" : "哈哈哈哈",
+        "oldRecord" : "100",
+        "newRecord" : "200:"
+    },{
+        "time" : "2017-01-01",
+        "ip" : "127.201.203.200",
+        "personDo" : "呜呜呜呜",
+        "personDone" : "哈哈哈哈",
+        "oldRecord" : "100",
+        "newRecord" : "200:"
+    },{
+        "time" : "2017-01-01",
+        "ip" : "127.201.203.200",
+        "personDo" : "呜呜呜呜",
+        "personDone" : "哈哈哈哈",
+        "oldRecord" : "100",
+        "newRecord" : "200:"
+    },{
+        "time" : "2017-01-01",
+        "ip" : "127.201.203.200",
+        "personDo" : "呜呜呜呜",
+        "personDone" : "哈哈哈哈",
+        "oldRecord" : "100",
+        "newRecord" : "200"
+    }
+];
+
+//初始化查询记录表格
+function initRecordTable(data) {
+    var table = document.getElementById("recordTable");
+    var th = table.children[0].children[0];
+    console.log(th);
+    for (var i = 1; i < table.children[0].children.length; i++) {
+        table.children[0].removeChild(table.children[0].children[i]);
+    }
+    //清除完其余数据只剩下标题，以下加载其他数据
+    for(var j = 0; j < data.length; j ++){
+        var tr = document.createElement("tr");
+        var time = "<td>" + data[i]["time"] + "</td>";
+        var ip = "<td>" + data[i]["ip"] + "</td>";
+        var personDO = "<td>" + data[i]["personDo"] + "</td>";
+        var personDone = "<td>" + data[i]["personDone"] + "</td>";
+        var oldRecord = "<td>" + data[i]["oldRecord"] + "</td>";
+        var newRecord = "<td>" + data[i]["newRecord"] + "</td>";
+        tr.innerHTML = time + ip + personDO + personDone + oldRecord + newRecord;
+        table.children[0].appendChild(tr);
+    }
+}
+
+// initRecordTable(recordData);
+
+//请求查询记录
+function getRecord() {
+    //请求数据样式如上，recordData数组，此外还需要一个code
+    $.ajax({
+        url : "/teacher/getRecord",
+        type : "POST",
+        processData : false,
+        contentType : false,
+        success : function (data) {
+            if(result.code == "success"){
+                initRecordTable(result.data);
+            }else {
+                alert("请求查询记录失败，请重试！");
+            }
+        },
+        error : function () {
+            alert("请求查询记录失败，请重试！");
+        }
+    });
+}

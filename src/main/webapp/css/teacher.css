@@ -61,7 +61,8 @@ body {
 #changePassword,
 #AddExam,
 #Exam_Student,
-#managerStudent {
+#managerStudent,
+#record {
 	display: none;
 	margin: 100px auto;
 	background-color: rgb(245,242,240);
@@ -125,7 +126,10 @@ body {
 }
 #studentTable tr,
 #studentTable td,
-#studentTable th{
+#studentTable th,
+#recordTable tr,
+#recordTable td,
+#recordTable th {
 	border: 1px solid #000;
 	text-align: center;
 }
@@ -138,17 +142,20 @@ body {
 	display: block;
 }
 
-#managerStudent div.close {
+#managerStudent div.close,
+#record .close2 {
 	position: absolute;
 	top: 10px;
 	right: 10px;
 	width:30px;
 	height: 30px;
 }
-#managerStudent div.close:hover {
+#managerStudent div.close:hover,
+#record .close2:hover {
 	cursor: pointer;
 }
-#managerStudent div.close i {
+#managerStudent div.close i,
+#record .close2 i{
 	font-size: 20px;
 }
 
@@ -167,4 +174,15 @@ body {
 	display: inline-block;
 	width: 87%;
 	margin-left: 14%;
+}
+
+#recordTable {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#modal2 div span {
+	width: 50%;
+	display: none;
+	margin: 0 28%;
 }

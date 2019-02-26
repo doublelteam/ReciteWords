@@ -13,17 +13,18 @@
 </head>
 <body>
 	<!-- 导航栏 -->
-	<nav>
-    	<div class="nav-wrapper">
-    		<a href="/teacher" class="brand-logo">管理页面</a>
-    			<ul class="right">
-					<li><a id="name" class="waves-effect" href="#">账号</a> </li>
-					<li><a class='dropdown-button' href='#' data-activates='dropdown1'>管理系统</a></li>
-    				<li><a class="waves-effect" href="#modal3">注销</a></li>
-    			</ul>
-    	</div>
-  	</nav>
-
+	<div class="navbar-fixed">
+		<nav>
+    		<div class="nav-wrapper">
+    			<a href="/teacher" class="brand-logo">管理页面</a>
+    				<ul class="right">
+						<li><a id="name" class="waves-effect" href="#">账号</a> </li>
+						<li><a class='dropdown-button' href='#' data-activates='dropdown1'>管理系统</a></li>
+    					<li><a class="waves-effect" href="#modal3">注销</a></li>
+    				</ul>
+    		</div>
+  		</nav>
+	</div>
 
 	<!--下拉菜单-->
 
@@ -32,6 +33,7 @@
 		<li class="divider"></li>
 		<li><a id="manager" class="waves-effect" href="#">管理学生</a></li>
 		<li class="divider"></li>
+		<li><a id="query" class="waves-effect" href="#">积分修改记录</a></li>
 	</ul>
 
 	<%--修改密码--%>
@@ -95,6 +97,7 @@
 					<i class="icon-user prefix"></i>
 					<input id="userName" type="text" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
 					<label for="userName">用户名</label>
+					<span></span>
 				</div>
 			</div>
 
@@ -104,6 +107,7 @@
 					<input id="password" type="password" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
 					<label for="password">密码</label>
 					<div id="eye" class="eye"><i class="icon-eye"></i></div>
+					<span></span>
 				</div>
 			</div>
 
@@ -124,6 +128,7 @@
 					<input id="managerPassword" type="password" onkeyup="value=value.replace(/[^\w\\/]/ig,'')">
 					<label for="managerPassword">管理密码</label>
 					<div id="eye2" class="eye"><i class="icon-eye"></i></div>
+					<span></span>
 				</div>
 			</div>
 
@@ -193,6 +198,29 @@
 		</table>
 	</div>
 
+
+	<%--积分查询记录--%>
+	<div class="container" id="record">
+		<div class="close2">
+			<i class="icon-switch"></i>
+		</div>
+
+		<div class="row">
+			<h4><i class="icon-files-empty"></i> 积分修改记录</h4>
+		</div>
+
+		<table id="recordTable" border="1" style="border: 1px solid #000;text-align: center">
+			<tr>
+				<th>时间</th>
+				<th>IP</th>
+				<th>修改人</th>
+				<th>被修改账号</th>
+				<th>修改前积分</th>
+				<th>修改后积分</th>
+			</tr>
+
+		</table>
+	</div>
 
   <script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>
