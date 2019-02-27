@@ -91,6 +91,18 @@
 		</div>
 	</div>
 
+
+	<!—-错误弹框—->
+	<div class="mask"></div>
+	<div id="error">
+		<div id="photo">
+			<img src="../images/alert.gif" alt="" width="100%" height="100%">
+		</div>
+		<div id="information">
+			<div><h5>error</h5></div>
+			<div ><a href="#" id="ok">确定</a></div>
+		</div>
+	</div>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>
   	<script src="../js/student.js"></script>

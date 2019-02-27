@@ -38,12 +38,12 @@ function getStudentInfo(){
                 $("#name").text("账号：" + data.name);
                 $("#points").text("积分：" + data.points);
             }else{
-                alert("请求学生信息失败，请刷新页面重试！");
+                setErrorAlert("请求学生信息失败，请刷新页面重试！");
             }
             
         },
         error : function () {
-            alert("请求学生信息失败，请刷新页面重试！");
+            setErrorAlert("请求学生信息失败，请刷新页面重试！");
         }
     })
 }
@@ -63,10 +63,10 @@ document.getElementById("logout").onclick = function(){
         contentType : false,
         success: function(result){
             if (result.code=="success"){
-                alert("注销成功！")
+                setRightNotice("注销成功！")
                 window.location.href = "/"
             }else {
-                alert("注销失败！");
+                setErrorAlert("注销失败！");
             }
         }
     });
@@ -190,13 +190,13 @@ function initExamList(ExamList) {
      var num;
     var op = document.getElementById("modal2").getElementsByTagName("option");
     for (var i = 0; i < op.length; i++){
-        if(i != 1 && op[i].selected == true){
+        if(i != 0 && op[i].selected == true){
             num = op[i].innerHTML;
             break;
         }
     }
     if(!num){
-        alert("请选择单词数量！");
+        setErrorAlert("请选择单词数量！");
         return false;
     }
 
@@ -218,10 +218,10 @@ function initExamList(ExamList) {
             //成功则在新页面加载试卷。需要根据试卷ID返回试卷信息给考试页面。
                 window.location.href="/exam";
             else
-                alert(result.msg);
+                setErrorAlert(result.msg);
         },
         error : function() {
-            alert("进入失败，请重试");
+            setErrorAlert("进入失败，请重试");
         }
     });
 }
@@ -242,7 +242,21 @@ function getExamList(){
     });
 }
 
-
-
-
+//设置弹窗确定按钮关闭弹窗
+$("#ok").click(function () {
+    $(".mask").css("display","none");
+    $("#error").css("display","none");
+});
+function setErrorAlert(str) {
+    $("#photo img").attr("src","../images/alert.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
+}
+function setRightNotice(str) {
+    $("#photo img").attr("src","../images/happy.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
+}
 

@@ -12,8 +12,14 @@ $(document).ready(function(){
         },
         complete : function () {
             $("#modal2 div span").css("display","none");
+            t_name = $("#userName").val();
+            t_password = $("#password").val();
             selectflag = 0;
-            console.log(11312);
+            document.getElementById("type").children[0].setAttribute("selected","true");
+            $("#password").val("");
+            $("#userName").val("");
+            $(".managerPass").css("display","none");
+            $("#modal2 a").attr("disabled","true");
         }
     });
     $('#modal1').modal({
@@ -29,8 +35,8 @@ $(document).ready(function(){
             //     // console.log("bbb");
             // },
             complete: function() {
-                $("#password").val(" ");
-                $("#userName").val(" ");
+                $("#password").val("");
+                $("#userName").val("");
                 $(".managerPass").css("display","none");
                 // console.log("dasdasd");
             } // Callback for Modal close
@@ -41,6 +47,12 @@ $(document).ready(function(){
 
 
 var ManagerPassword;
+var t_name;
+var t_password;
+var selectflag = 0;
+var nameflag = 0;
+var passwordflag = 0;
+var managerflag = 0;
 
 //下拉菜单启动
 $('.dropdown-button').dropdown({
@@ -63,10 +75,10 @@ document.getElementById("logout").onclick = function(){
         contentType : false,
         success: function(result){
             if (result.code=="success"){
-                alert("注销成功！")
+                setRightNotice("注销成功！")
                 window.location.href="/"
             }else {
-                alert("注销失败！");
+                setErrorAlert("注销失败！");
             }
         }
     });
@@ -196,10 +208,11 @@ function initExamList(ExamList) {
                     dataType : "json",
                     //删除对应id的试卷
                     success : function() {
-                        alert("移除成功！");
-                        location.reload();},
+                        setRightNotice("移除成功！");
+                        location.reload();
+                    },
                     error : function() {
-                        alert("移除失败，请重试");
+                        setErrorAlert("移除失败，请重试");
                     }
                 });
             }
@@ -225,7 +238,7 @@ function initExamList(ExamList) {
                     location.loacation.href = "/examDetail";
                 },
                 error : function() {
-                    alert("查看失败，请重试");
+                    setErrorAlert("查看失败，请重试");
                 }
             });
         };
@@ -263,7 +276,7 @@ function uploadWords(){
         contentType: false,
         data : new FormData($("#uploadForm")[0]),
         success : function(data) {
-            alert(data.msg);
+            setErrorAlert(data.msg);
             location.reload();
         }
     });
@@ -280,7 +293,7 @@ function getTeacherInfo() {
             if(data.code == "success"){
                 $("#name").html("账号:" + data.name);
             }else{
-                alert("获取教师信息失败，请重新登录");
+                setErrorAlert("获取教师信息失败，请重新登录");
             }
         }
     });
@@ -313,19 +326,19 @@ document.getElementById('yes').onclick = function() {
     var newPassword = document.getElementById('newpassword').value;
     var newPassword2 = document.getElementById('newpassword2').value;
     if(!newPassword || !oldPassword || !newPassword2){
-        alert("密码不能为空！");
+        setErrorAlert("密码不能为空！");
         return;
     }
     if(!(checkPassword(oldPassword) && checkPassword(newPassword) && checkPassword(newPassword2))){
-        alert("密码位数需6-20位！");
+        setErrorAlert("密码位数需6-20位！");
         return;
     }
     if(newPassword != newPassword2){
-        alert("两次密码不一致！");
+        setErrorAlert("两次密码不一致！");
         return;
     }
     if(oldPassword == newPassword){
-        alert("新密码和原密码一样！");
+        setErrorAlert("新密码和原密码一样！");
         return;
     }
 
@@ -344,18 +357,18 @@ document.getElementById('yes').onclick = function() {
                 $("#oldpassword").val("");
                 $("#newpassword").val("");
                 $("#newpassword2").val("");
-                alert("修改成功！")
+                Alert("修改成功！")
                 document.getElementById('changePassword').style.display = "none";
                 $("#oout2").fadeIn(600);
             }else {
-                alert("原密码错误，修改失败！");
+                setErrorAlert("原密码错误，修改失败！");
                 $("#oldpassword").val("");
                 $("#newpassword").val("");
                 $("#newpassword2").val("");
             }
         },
         error : function () {
-            alert("修改请求发送失败，请重试。");
+            setErrorAlert("修改请求发送失败，请重试。");
         }
     });
 }
@@ -417,7 +430,7 @@ $("#manager").click(function () {
 //初始化学生列表
 function initStudentTable(data) {
     if(!data){
-        alert("未能获取学生信息，请刷新重试！");
+        setErrorAlert("未能获取学生信息，请刷新重试！");
         return false;
     }
     $("#studentTable").html("");
@@ -478,9 +491,9 @@ function initStudentTable(data) {
 
 // initStudentTable(testData);
 //
-var cacheDate = [];
+var cacheData = [];
 // for (var i = 0; i < testData.length; i++){
-//     cacheDate[i] = testData[i];
+//     cacheData[i] = testData[i];
 // }
 
 //获取所有学生
@@ -493,11 +506,11 @@ function getAllStudents() {
         success : function (data) {
             initStudentTable(data);
             for (var i = 0; i < data.length; i++){
-                cacheDate[i] = data[i];
+                cacheData[i] = data[i];
             }
         },
         error : function () {
-            alert("请求学生信息失败，请刷新页面重试。");
+            setErrorAlert("请求学生信息失败，请刷新页面重试。");
         }
     });
 }
@@ -520,11 +533,11 @@ function modify() {
     var newPoints = prompt("请输入新的积分数");
     var reg = /^[0-9]*$/;
     if(!reg.test(newPoints)){
-        alert("请输入数字！");
+        setErrorAlert("请输入数字！");
         return false;
     }
     if(newPoints < 0){
-        alert("积分不能小于0");
+        setErrorAlert("积分不能小于0");
         return false;
     }
     var id = this.parentNode.parentNode.children[0].innerHTML;
@@ -555,15 +568,15 @@ function modify() {
         contentType : false,
         success : function (result) {
             if(result.code == "success"){
-                alert("修改积分成功！");
+                setRightNotice("修改积分成功！");
                 getAllStudents();
             }
             else {
-                alert("修改积分失败！");
+                setErrorAlert("修改积分失败！");
             }
         },
         error : function () {
-            alert("向服务器发送修改请求失败，请重试！");
+            setErrorAlert("向服务器发送修改请求失败，请重试！");
         }
     });
 }
@@ -578,11 +591,11 @@ function Delete() {
     }
     var t = prompt("请输入管理密码");
     if(!ManagerPassword){
-        alert("无法进行密码验证。请刷新页面重试");
+        setErrorAlert("无法进行密码验证。请刷新页面重试");
         return false;
     }
     if(!t == ManagerPassword){
-        alert("管理密码错误！");
+        setErrorAlert("管理密码错误！");
         return false;
     }
     var form = new FormData();
@@ -605,15 +618,15 @@ function Delete() {
         contentType : false,
         success : function (result) {
             if(result.code == 1){
-                alert("删除账号成功！");
+                setRightNotice("删除账号成功！");
                 getAllStudents();
             }
             else {
-                alert("修改账号失败！");
+                setErrorAlert("修改账号失败！");
             }
         },
         error : function () {
-            alert("向服务器发送请求失败，请重试！");
+            setErrorAlert("向服务器发送请求失败，请重试！");
         }
     });
 }
@@ -641,12 +654,12 @@ function resetPassword() {
        contentType : false,
         success : function (result) {
             if(result.code == 1){
-                alert("修改密码成功！");
+                setRightNotice("修改密码成功！");
             }else
-                alert("修改失败，请重试。");
+                setErrorAlert("修改失败，请重试。");
         },
         error : function () {
-            alert("向服务器发送修改请求失败，请重试！");
+            setErrorAlert("向服务器发送修改请求失败，请重试！");
         }
     });
 }
@@ -655,9 +668,12 @@ $("#studentTable a[class=reset]").click(resetPassword);
 //搜索功能
 function search() {
     var id = $("#input").val();
+    if(!id){
+        return false;
+    }
     var t = [];
-    for (var i = 0; i < cacheDate.length; i++){
-        if(cacheDate[i]["id"].indexOf(id) != -1){
+    for (var i = 0; i < cacheData.length; i++){
+        if(cacheData[i]["id"].indexOf(id) != -1){
             t.push(testData[i]);
         }
     }
@@ -665,12 +681,10 @@ function search() {
 }
 $("#search").click(search);
 
+//输入框根据输入验证内容
 $("#modal2 div input").bind("blur",function () {
     var t = this.value;
     var span = this.parentNode.children[4];
-    var nameflag = 1;
-    var passwordflag = 1;
-    var managerflag = 1;
    if(this.id == "userName") {
         if(!t){
             span = this.parentNode.children[3];
@@ -678,7 +692,8 @@ $("#modal2 div input").bind("blur",function () {
             span.style.color = "red";
             $(span).fadeIn(200);
             nameflag = 0;
-        }
+        }else
+            nameflag = 1;
    }
    if(this.id == "password"){
         if(!checkPassword(t)){
@@ -687,6 +702,8 @@ $("#modal2 div input").bind("blur",function () {
             $(span).fadeIn(200);
             passwordflag = 0;
         }
+        else
+            passwordflag = 1;
    }
    if(this.id == "managerPassword"){
        if(!t){
@@ -695,9 +712,28 @@ $("#modal2 div input").bind("blur",function () {
            $(span).fadeIn(200);
            managerflag = 0;
        }
+       else
+           managerflag = 1;
    }
    var btn = $("#modal2 div a");
-   if(nameflag == 1 && managerflag == 1 && passwordflag == 1 && selectflag == 1){
+    console.log("name"+nameflag);
+    console.log("manager"+managerflag);
+    console.log("pass"+passwordflag);
+    console.log("select"+selectflag);
+    console.log("---------------");
+   if(nameflag == 1 && managerflag == 1 && passwordflag == 1 && selectflag == 1 && $("#managerPassword").is(":visible")){
+       console.log("name"+nameflag);
+       console.log("manager"+managerflag);
+       console.log("pass"+passwordflag);
+       console.log("select"+selectflag);
+       console.log("显示");
+       btn.removeAttr("disabled");
+   }else if(nameflag == 1 && passwordflag == 1 && selectflag == 1 && $("#managerPassword").is(":hidden")){
+       console.log("name"+nameflag);
+       console.log("manager"+managerflag);
+       console.log("pass"+passwordflag);
+       console.log("select"+selectflag);
+       console.log("隐藏");
        btn.removeAttr("disabled");
    }else{
        btn.attr("disabled","true");
@@ -713,15 +749,17 @@ $("#modal2 div input").bind("focus",function () {
 
 //添加账号
 function add() {
-    var id = $("#userName").val();
+    var id = t_name;
     if(!id){
-        alert("请输入账号！")
+        setErrorAlert("请输入账号！")
         return false;
     }
 
-    var password = $("#password").val();
+    var password = t_password;
+    console.log(id);
+    console.log(password);
     if( !checkPassword(password) ){
-        alert("密码位数需6-20位！");
+        setErrorAlert("密码位数需6-20位！");
         return false;
     }
     var type;
@@ -731,7 +769,7 @@ function add() {
     else if(op2[2].selected == true)
         type = "student";
     else
-        alert("请选择账号类型！");
+        setErrorAlert("请选择账号类型！");
 
 
     if(type == "teacher"){
@@ -745,33 +783,36 @@ function add() {
     form.append("password",password);
     form.append("type",type);
     $.ajax({
-        url : "/teacher/addNew",
+        url : "/teacher/addStudent",
         type : "POST",
         data : form,
         processData : false,
         contentType : false,
         success : function (result) {
             if(result.code == 1){
-                alert("添加账号" + id + "成功，密码为" + password +"！");
+                setRightNotice("添加账号" + id + "成功，密码为" + password +"！");
             }
         }
     });
 }
 
 //设置select标签变化事件，id为type
-var selectflag = 0;
 document.getElementById("type").onchange = function () {
    for (var i = 0; i < this.children.length; i++){
        if(this.children[i].selected == true && this.children[i].innerHTML == "教师"){
            $(".managerPass").css("display","block");
            $("#modal2 div a").attr("disabled","true");
            selectflag = 1;
+           managerflag = 0;
            break;
        }
        else{
+           selectflag = 1;
            $(".managerPass").css("display","none");
            $(".managerPass input").val("");
-           $("#modal2 div a").removeAttr("disabled");
+           if(nameflag == 1 && passwordflag == 1 && selectflag == 1){
+               $("#modal2 div a").removeAttr("disabled");
+           }
        }
    }
 };
@@ -803,7 +844,6 @@ window.onload=function () {
     getManagerPassword();
     getAllStudents();
     getTeacherInfo();
-    getRecord();
 };
 
 //关闭学生管理页面
@@ -825,6 +865,8 @@ $("div[class=close2]").click(function () {
     $("#oout2").fadeIn(500);
 });
 
+
+//查询积分页面切换
 $("#query").click(function () {
    $("#changePassord").fadeOut(500);
    $("#managerStudent").fadeOut(500);
@@ -900,6 +942,8 @@ function initRecordTable(data) {
 
 // initRecordTable(recordData);
 
+var record = [];
+
 //请求查询记录
 function getRecord() {
     //请求数据样式如上，recordData数组，此外还需要一个code
@@ -910,13 +954,34 @@ function getRecord() {
         contentType : false,
         success : function (data) {
             if(result.code == "success"){
+                for (var i = 0; i < result.data.length; i ++){
+                    record[i] = result.data[i];
+                }
                 initRecordTable(result.data);
             }else {
-                alert("请求查询记录失败，请重试！");
+                setErrorAlert("请求查询记录失败，请重试！");
             }
         },
         error : function () {
-            alert("请求查询记录失败，请重试！");
+            setErrorAlert("请求查询记录失败，请重试！");
         }
     });
+}
+
+                    //设置弹窗确定按钮关闭弹窗
+$("#ok").click(function () {
+   $(".mask").css("display","none");
+   $("#error").css("display","none");
+});
+function setErrorAlert(str) {
+    $("#photo img").attr("src","../images/alert.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
+}
+function setRightNotice(str) {
+    $("#photo img").attr("src","../images/happy.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
 }

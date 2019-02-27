@@ -199,7 +199,7 @@
 	</div>
 
 
-	<%--积分查询记录--%>
+	<%--查询积分修改记录--%>
 	<div class="container" id="record">
 		<div class="close2">
 			<i class="icon-switch"></i>
@@ -208,6 +208,8 @@
 		<div class="row">
 			<h4><i class="icon-files-empty"></i> 积分修改记录</h4>
 		</div>
+
+		<div id="recordSearch-container"></div>
 
 		<table id="recordTable" border="1" style="border: 1px solid #000;text-align: center">
 			<tr>
@@ -222,6 +224,19 @@
 		</table>
 	</div>
 
+
+	<!—-错误弹框—->
+	<div class="mask"></div>
+	<div id="error">
+		<div id="photo">
+			<img src="../images/alert.gif" alt="" width="100%" height="100%">
+		</div>
+		<div id="information">
+			<div><h5>error</h5></div>
+			<div ><a href="#" id="ok">确定</a></div>
+		</div>
+	</div>
+	
   <script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>
   <script src="../js/teacher.js"></script>

@@ -29,6 +29,26 @@ function getWords() {
         }
 	});
 }
+function getStudentInfo(){
+    $.ajax({
+        url : "/student/studentInfo",
+        type : "POST",
+        processData : false,
+        contentType : false,
+        success : function (data) {
+            if(data.code == "success"){
+                $("#name").text("账号：" + data.name);
+                $("#points").text("积分：" + data.points);
+            }else{
+                setErrorAlert("请求学生信息失败，请刷新页面重试！");
+            }
+
+        },
+        error : function () {
+            setErrorAlert("请求学生信息失败，请刷新页面重试！");
+        }
+    })
+}
 //{
 // [
 // "id":"1",
@@ -219,6 +239,7 @@ function beginWord2(){
 window.onload=function () {
 	getWords();
     li_onclick();
+    getStudentInfo();
 }
 
 //为每个li标签注册点击事件
@@ -344,12 +365,12 @@ function submit2() {
             dataType : "json",
             success : function (result) {
                 if(result != "success"){
-                    alert("上传失败，请重新提交");
+                    setErrorAlert("上传失败，请重新提交");
                     return false;
                 }
             },
             error : function () {
-                alert("网络原因与服务器通讯失败，请重试");
+                setErrorAlert("网络原因与服务器通讯失败，请重试");
                 return false;
             }
         });
@@ -382,12 +403,12 @@ function submit2() {
             dataType : "json",
             success : function (result) {
                 if(result != "success"){
-                    alert("上传失败，请重新提交");
+                    setErrorAlert("上传失败，请重新提交");
                     return false;
                 }
             },
             error : function () {
-                alert("网络原因与服务器通讯失败，请重试");
+                setErrorAlert("网络原因与服务器通讯失败，请重试");
                 return false;
             }
         });
@@ -407,3 +428,21 @@ function submit2() {
 $("#end-btn").click(function () {
    window.location = "/student";
 });
+
+//设置弹窗确定按钮关闭弹窗
+$("#ok").click(function () {
+    $(".mask").css("display","none");
+    $("#error").css("display","none");
+});
+function setErrorAlert(str) {
+    $("#photo img").attr("src","../images/alert.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
+}
+function setRightNotice(str) {
+    $("#photo img").attr("src","../images/happy.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
+}
