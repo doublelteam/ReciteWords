@@ -166,3 +166,10 @@ select {
 	opacity: 0.5;
 	z-index: 97;
 }
+
+.even {
+	background-color: #fff38f;
+}
+.odd {
+	background-color: #ffffee;
+}

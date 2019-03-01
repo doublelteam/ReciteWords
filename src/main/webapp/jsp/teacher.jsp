@@ -75,13 +75,13 @@
 
 
   	<!-- 注销确认 -->
-  	<div id="modal3" class="modal l6">
-    	<div class="modal-content">
-      		<h6>你确定退出当前账号吗？</h6>
+  	<div id="modal3" class="modal">
+    	<div class="header">
+      		<div class="tip"><h6>你确定退出当前账号吗？</h6></div>
     	</div>
-    	<div class="modal-footer">
-      		<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" id="logout">确定</a>
-      		<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">取消</a>
+    	<div class="footer">
+      		<a href="#!" class="modal-close waves-effect" id="logout">确定</a>
+      		<a href="#!" class="modal-close waves-effect">取消</a>
     	</div>
   	</div>
 
@@ -181,11 +181,17 @@
 		</div>
 
 		<table id="studentTable" border="1" style="border: 1px solid #000;text-align: center">
-			<tr>
-				<th>账号</th>
-				<th>积分</th>
-				<th>操作</th>
-			</tr>
+			<thead>
+				<tr>
+					<th>账号</th>
+					<th>积分</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+			</tbody>
 			<%--<tr>--%>
 				<%--<td>yy123</td>--%>
 				<%--<td>100分</td>--%>
@@ -212,15 +218,19 @@
 		<div id="recordSearch-container"></div>
 
 		<table id="recordTable" border="1" style="border: 1px solid #000;text-align: center">
-			<tr>
-				<th>时间</th>
-				<th>IP</th>
-				<th>修改人</th>
-				<th>被修改账号</th>
-				<th>修改前积分</th>
-				<th>修改后积分</th>
-			</tr>
+			<thead>
+				<tr>
+					<th>时间</th>
+					<th>IP</th>
+					<th>修改人</th>
+					<th>被修改账号</th>
+					<th>修改前积分</th>
+					<th>修改后积分</th>
+				</tr>
+			</thead>
+			<tbody>
 
+			</tbody>
 		</table>
 	</div>
 
@@ -236,7 +246,22 @@
 			<div ><a href="#" id="ok">确定</a></div>
 		</div>
 	</div>
-	
+
+	<%--修改密码修改积分删除账号弹框--%>
+	<div id="modal4" class="modal" style="border-radius: 6%">
+		<div class="header2">
+			<div class="tip2"><h6></h6></div>
+			<input type="text" id="modify-input" placeholder="在这里输入">
+			<input type="password" id="modify-input2" placeholder="在这里输入管理密码" style="display: none;">
+			<%--<input type="password" id="modify-input3" placeholder="请在这里输入管理密码" >--%>
+		</div>
+		<div class="footer2">
+			<a href="#!" class="modal-close waves-effect" id="modify">确定</a>
+			<a href="#!" class="modal-close waves-effect">取消</a>
+		</div>
+	</div>
+
+
   <script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>
   <script src="../js/teacher.js"></script>

@@ -254,3 +254,131 @@ div#search-container a {
 	opacity: 0.5;
 	z-index: 97;
 }
+.even {
+	background-color: #fff38f;
+}
+.odd {
+	background-color: #ffffee;
+}
+
+div#modal4.modal,
+div#modal3.modal {
+	width: 500px;
+	border-radius: 5%;
+	overflow: hidden;
+	background-color: rgb(97,184,176);
+
+}
+div#modal3.modal {
+	width: 350px;
+	height: 200px;
+}
+.header {
+	/*background-color: rgb(97,184,176);*/
+	width: 350px;
+	height: 130px;
+	text-align: center;
+	margin: 0 0;
+	position: relative;
+}
+.header h6 {
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+	height: 20px;
+	line-height: 20px;
+}
+.tip {
+	width: 350px;
+	height: 40px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -20px 0 0 -175px;
+ }
+.footer {
+	background-color: #fff;
+	width: 100%;
+	height: 70px;
+	vertical-align: center;
+	text-align: center;
+	/*overflow: hidden;*/
+}
+.footer a {
+	border: 1px solid rgb(97,184,176);
+	border-radius: 18px;
+	color: rgb(97,184,176);
+	background-color: #fff;
+	margin: 18px 20px 0;
+	padding: 5px 20px;
+}
+
+
+div#modal4 div input#modify-input,
+div#modal4 div input#modify-input2{
+	width: 50%;
+	margin: 20px 26%;
+	display: inline-block;
+	color: #fff;
+}
+div#modal4 div input#modify-input2 {
+	position: absolute;
+	top: 128px;
+	left: 0;
+}
+
+.title {
+	width: 500px;
+	height: 40px;
+	background-color: #fff;
+	color: rgb(97,184,176);
+}
+
+.header2 {
+	/*background-color: rgb(97,184,176);*/
+	width: 500px;
+	height: 210px;
+	text-align: center;
+	margin: 0 0;
+	position: relative;
+}
+
+.header2 h6{
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.header2 h6.newH {
+	color: rgb(97,184,176);
+	margin: 0;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+.footer2 {
+	background-color: #fff;
+	width: 100%;
+	height: 70px;
+	vertical-align: center;
+	text-align: center;
+	/*overflow: hidden;*/
+}
+.footer2 a {
+	border: 1px solid rgb(97,184,176);
+	border-radius: 18px;
+	color: rgb(97,184,176);
+	background-color: #fff;
+	margin: 18px 20px 0;
+	padding: 5px 20px;
+}
+.tip2 {
+	width: 500px;
+	height: 40px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -20px 0 0 -250px;
+}

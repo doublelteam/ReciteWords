@@ -42,6 +42,35 @@ $(document).ready(function(){
             } // Callback for Modal close
         }
     );
+    $("#modal4").modal({
+        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+        opacity: .5, // Opacity of modal background
+        in_duration: 300, // Transition in duration
+        out_duration: 200, // Transition out duration
+        starting_top: '28%', // Starting top style attribute
+        ending_top: '35%', // Ending top style attribute
+        complete : function () {
+            $("#modify-input").css("display","inline-block").val("");
+            $("#modify-input2").css("display","none").val("");
+            $("#modify-input").attr("type","text");
+            $("div.header2>div").attr("class","tip2");
+            $("div.header2 h6").removeClass();
+
+        }
+    });
+    $("#modal3").modal({
+        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+        opacity: .5, // Opacity of modal background
+        in_duration: 300, // Transition in duration
+        out_duration: 200, // Transition out duration
+        starting_top: '33%', // Starting top style attribute
+        ending_top: '40%', // Ending top style attribute
+        complete : function () {
+            // $("#modal4 h6").html("你确定退出当前账号吗？");
+            $("#modify-input").css("diaplay","inline-block");
+            $("#modify-input2").css("diaplay","none");
+        }
+    });
 });
 
 
@@ -66,7 +95,7 @@ $('.dropdown-button').dropdown({
     }
 );
 //确定注销按钮
-document.getElementById("logout").onclick = function(){
+function f1(){
 	//退出登录，跳转到登录界面
     $.ajax({
         url : "/logout",
@@ -83,10 +112,7 @@ document.getElementById("logout").onclick = function(){
         }
     });
 }
-
-
-
-
+document.getElementById("logout").onclick = f1;
 
 function getInfo(){
     getExamList();
@@ -302,10 +328,10 @@ function getTeacherInfo() {
 //修改密码
 var passwordContainer = document.getElementById('changePassword');
 document.getElementById('c_password').onclick = function(){
-    $("#oout2").fadeOut(500);
-    $("#managerStudent").fadeOut(500);
-    $("#record").fadeOut(500);
-    $(passwordContainer).fadeIn(500);
+    $("#oout2").hide(700);
+    $("#managerStudent").hide(700);
+    $("#record").hide(700);
+    $(passwordContainer).show(700);
 }
 
 //检查两次输入的密码
@@ -359,7 +385,7 @@ document.getElementById('yes').onclick = function() {
                 $("#newpassword2").val("");
                 Alert("修改成功！")
                 document.getElementById('changePassword').style.display = "none";
-                $("#oout2").fadeIn(600);
+                $("#oout2").show(600);
             }else {
                 setErrorAlert("原密码错误，修改失败！");
                 $("#oldpassword").val("");
@@ -375,8 +401,8 @@ document.getElementById('yes').onclick = function() {
 
 //取消修改
 document.getElementById('cancel').onclick = function() {
-    $(document.getElementById('changePassword')).fadeOut(500);
-    $("#oout2").fadeIn(500);
+    $(document.getElementById('changePassword')).hide(600);
+    $("#oout2").show(600);
     $("#oldpassword").val("");
     $("#newpassword").val("");
     $("#newpassword2").val("");
@@ -418,34 +444,35 @@ var testData = [
 //管理学生界面
 //切换界面
 $("#manager").click(function () {
-    $("#oout2").fadeOut(500);
-    $("#changePassword").fadeOut(500);
-    $("#record").fadeOut(500);
-    $("#managerStudent").fadeIn(500);
+    $("#oout2").hide(700);
+    $("#changePassword").hide(700);
+    $("#record").hide(700);
+    $("#managerStudent").show(700);
     $("#oldpassword").val("");
     $("#newpassword").val("");
     $("#newpassword2").val("");
 });
 
 //初始化学生列表
+var operation = 0;
 function initStudentTable(data) {
     if(!data){
         setErrorAlert("未能获取学生信息，请刷新重试！");
         return false;
     }
-    $("#studentTable").html("");
-    var  ttr = document.createElement("tr");
-    var table = document.getElementById("studentTable");
-    table.appendChild(ttr);
-    var th1 = document.createElement("th");
-    var th2 = document.createElement("th");
-    var th3 = document.createElement("th");
-    ttr.appendChild(th1);
-    ttr.appendChild(th2);
-    ttr.appendChild(th3);
-    th1.innerHTML = "账号";
-    th2.innerHTML = "积分";
-    th3.innerHTML = "操作";
+    var table = document.getElementById("studentTable").children[1];
+    table.innerHTML = "";
+    console.log(table);
+    // table.appendChild(ttr);
+    // var th1 = document.createElement("th");
+    // var th2 = document.createElement("th");
+    // var th3 = document.createElement("th");
+    // ttr.appendChild(th1);
+    // ttr.appendChild(th2);
+    // ttr.appendChild(th3);
+    // th1.innerHTML = "账号";
+    // th2.innerHTML = "积分";
+    // th3.innerHTML = "操作";
 
     for (var i = 0; i < data.length; i ++){
 
@@ -456,6 +483,7 @@ function initStudentTable(data) {
 
         //创建账号、积分、操作的td标签,并加入列表中
         var td1 = document.createElement("td");
+        $(td1).attr("name","id");
         td1.innerHTML = data[i]["id"];
         tr.appendChild(td1);
 
@@ -468,33 +496,68 @@ function initStudentTable(data) {
         //创建修改积分、删除、重置密码等按钮
         var a1 = document.createElement("a");
         a1.className = "modify";
-        a1.href = "#";
+        a1.href = "#modal4";
         a1.innerHTML = "修改积分";
         td3.appendChild(a1);
+        a1.onclick = function(){
+            $("#modal4 h6").html("修改积分");
+            operation = 1;
+            var t_id = this.parentNode.parentNode.children[0].innerHTML;
+            $("#modify").attr("ids",t_id);
+            $("#modify-input").attr("placeholder","请在此输入新的积分");
+            $("div.header2 div").attr("class","title");
+            $("div.header2 h6").attr("class","newH");
+            getClickEvent();
+        };
 
         var a2 = document.createElement("a");
         a2.className = "delete";
         a2.innerHTML = "删除";
-        a2.href = "#";
+        a2.href = "#modal4";
         td3.appendChild(a2);
+        a2.onclick = function(){
+            $("#modal4 h6").html("确定删除这个账号吗？一旦删除将无法恢复！");
+            operation = 2;
+            var t_id = this.parentNode.parentNode.children[0].innerHTML;
+            $("#modify-input").css("display","none").next().css("display","inline-block");
+            getClickEvent();
+        };
 
         var a3 = document.createElement("a");
         a3.className = "reset";
         a3.innerHTML = "修改密码";
-        a3.href = "#";
+        a3.href = "#modal4";
         td3.appendChild(a3);
+        a3.onclick = function () {
+            operation = 3;
+            $("#modal4 h6").html("修改密码");
+            var t_id = this.parentNode.parentNode.children[0].innerHTML;
+            $("#modify").attr("ids",t_id);
+            $("#modify-input").attr("placeholder","请在此输入新密码").attr("type","password");
+            $("#modify-input2").css("display","inline-block");
+            $("div.header2 div").attr("class","title");
+            $("div.header2 h6").attr("class","newH");
+            getClickEvent();
+        };
+
+        $("#studentTable>tbody tr:odd").addClass("odd");
+        $("#studentTable>tbody tr:even").addClass("even");
+        $("#studentTable>tbody tr td").css("padding","10px 15px");
     }
-    $("#studentTable a[class = delete]").click(Delete);
-    $("#studentTable a[class = modify]").click(modify);
-    $("#studentTable a[class=reset]").click(resetPassword);
+}
+function getClickEvent() {
+    if(operation == 1)
+        $("#modify").click(modify);
+    else if(operation == 2)
+        $("#modify").click(Delete);
+    else if(operation == 3)
+        $("#modify").click(resetPassword);
+    else
+        $("#modify").unbind("click");
 }
 
 // initStudentTable(testData);
 //
-var cacheData = [];
-// for (var i = 0; i < testData.length; i++){
-//     cacheData[i] = testData[i];
-// }
 
 //获取所有学生
 function getAllStudents() {
@@ -505,9 +568,7 @@ function getAllStudents() {
         contentType : false,
         success : function (data) {
             initStudentTable(data);
-            for (var i = 0; i < data.length; i++){
-                cacheData[i] = data[i];
-            }
+            console.log("dasdsadas");
         },
         error : function () {
             setErrorAlert("请求学生信息失败，请刷新页面重试。");
@@ -530,7 +591,11 @@ function getManagerPassword() {
 
 //修改积分
 function modify() {
-    var newPoints = prompt("请输入新的积分数");
+    var newPoints = $("#modify-input").val();
+    if(!newPoints){
+        setErrorAlert("新积分不能为空！");
+        return false;
+    };
     var reg = /^[0-9]*$/;
     if(!reg.test(newPoints)){
         setErrorAlert("请输入数字！");
@@ -540,7 +605,7 @@ function modify() {
         setErrorAlert("积分不能小于0");
         return false;
     }
-    var id = this.parentNode.parentNode.children[0].innerHTML;
+    var id = $(this).attr("ids");
     var form = new FormData();
 
 
@@ -554,12 +619,6 @@ function modify() {
     form.append("newPoint",newPoints);
     console.log("id" + id);
     console.log("points" + newPoints);
-    for(var i = 0;i < testData.length; i ++){
-        if(testData[i]["id"] == id){
-            testData[i]["point"] = newPoints;
-        }
-    }
-    // initStudentTable(testData);
     $.ajax({
         url : "/teacher/changePoints",
         type : "POST",
@@ -580,16 +639,15 @@ function modify() {
         }
     });
 }
-$("#studentTable a[class = modify]").click(modify);
 
 //删除学生
 function Delete() {
-    var id = this.parentNode.parentNode.children[0].innerHTML;
-    var str = "确定删除账号 " + id + " 吗？删除后将无法恢复！";
-    if(!confirm(str)){
+    var id = $(this).attr("ids");
+    var t =  $("#modify-input2").val();
+    if(!t){
+        setErrorAlert("管理密码不能为空");
         return false;
     }
-    var t = prompt("请输入管理密码");
     if(!ManagerPassword){
         setErrorAlert("无法进行密码验证。请刷新页面重试");
         return false;
@@ -630,18 +688,16 @@ function Delete() {
         }
     });
 }
-$("#studentTable a[class = delete]").click(Delete);
 
 //修改密码
 function resetPassword() {
-    var id = this.parentNode.parentNode.children[0].innerHTML;
-    var password = prompt("请输入新的密码");
-    if(!confirm("确定修改账号 " + id + "的密码吗？修改后密码为 " + password)){
+    var id = $(this).attr("ids");
+    var password = $("#modify-input").val();
+    var Mpassword = $("#modify-input2").val();
+    if(!password || !Mpassword){
+        setErrorAlert("密码不能为空！");
         return false;
     }
-
-
-    //发送的数据是账号的id和新的密码，需要返回修改成功的result.code的值为1
     var form = new FormData();
     form.append("id",id);
     form.append("password",password);
@@ -663,22 +719,18 @@ function resetPassword() {
         }
     });
 }
-$("#studentTable a[class=reset]").click(resetPassword);
 
 //搜索功能
 function search() {
     var id = $("#input").val();
     if(!id){
+        $("#studentTable>tbody tr").show();
         return false;
     }
-    var t = [];
-    for (var i = 0; i < cacheData.length; i++){
-        if(cacheData[i]["id"].indexOf(id) != -1){
-            t.push(testData[i]);
-        }
-    }
-    initStudentTable(t);
+    $("#studentTable>tbody tr").hide();
+    $("#studentTable>tbody tr td[name = id]:contains(" + id + ")").parent().show();
 }
+$("#input").keyup(search);
 $("#search").click(search);
 
 //输入框根据输入验证内容
@@ -690,7 +742,7 @@ $("#modal2 div input").bind("blur",function () {
             span = this.parentNode.children[3];
             span.innerHTML = "账号不能为空！";
             span.style.color = "red";
-            $(span).fadeIn(200);
+            $(span).show(200);
             nameflag = 0;
         }else
             nameflag = 1;
@@ -699,7 +751,7 @@ $("#modal2 div input").bind("blur",function () {
         if(!checkPassword(t)){
             span.innerHTML = "密码位数需6-20位！";
             span.style.color = "red";
-            $(span).fadeIn(200);
+            $(span).show(200);
             passwordflag = 0;
         }
         else
@@ -709,7 +761,7 @@ $("#modal2 div input").bind("blur",function () {
        if(!t){
            span.innerHTML = "管理密码不能为空！";
            span.style.color = "red";
-           $(span).fadeIn(200);
+           $(span).show(200);
            managerflag = 0;
        }
        else
@@ -744,7 +796,7 @@ $("#modal2 div input").bind("focus",function () {
     var span = this.parentNode.children[4];
     if(!span)
         span = this.parentNode.children[3];
-    $(span).fadeOut(200);
+    $(span).hide(200);
 });
 
 //添加账号
@@ -848,10 +900,10 @@ window.onload=function () {
 
 //关闭学生管理页面
 $("div[class = close]").click(function () {
-    $("#changePassword").fadeOut(500);
-    $("#managerStudent").fadeOut(500);
-    $("#record").fadeOut(500);
-    $("#oout2").fadeIn(500);
+    $("#changePassword").hide(700);
+    $("#managerStudent").hide(700);
+    $("#record").hide(700);
+    $("#oout2").show(700);
 });
 
               //查询积分修改记录相关代码
@@ -859,21 +911,21 @@ $("div[class = close]").click(function () {
 
 //关闭积分修改查询页面
 $("div[class=close2]").click(function () {
-    $("#changePassword").fadeOut(500);
-    $("#managerStudent").fadeOut(500);
-    $("#record").fadeOut(500);
-    $("#oout2").fadeIn(500);
+    $("#changePassword").hide(700);
+    $("#managerStudent").hide(700);
+    $("#record").hide(700);
+    $("#oout2").show(700);
 });
 
 
 //查询积分页面切换
 $("#query").click(function () {
-   $("#changePassord").fadeOut(500);
-   $("#managerStudent").fadeOut(500);
-   $("#oout2").fadeOut(500);
+   $("#changePassord").hide(700);
+   $("#managerStudent").hide(700);
+   $("#oout2").hide(700);
    $("#changePassword input").val("");
    // console.log("dasds");
-   $("#record").fadeIn(500);
+   $("#record").show(700);
    getRecord();
 });
 
@@ -923,6 +975,30 @@ function initRecordTable(data) {
     var table = document.getElementById("recordTable");
     var th = table.children[0].children[0];
     console.log(th);
+    for (var i = 1; i < table.children[1].children.length; i++) {
+        table.children[1].removeChild(table.children[1].children[i]);
+    }
+    //清除完其余数据只剩下标题，以下加载其他数据
+    for(var j = 0; j < data.length; j ++){
+        var tr = document.createElement("tr");
+        var time = "<td>" + data[i]["time"] + "</td>";
+        var ip = "<td>" + data[i]["ip"] + "</td>";
+        var personDO = "<td>" + data[i]["personDo"] + "</td>";
+        var personDone = "<td>" + data[i]["personDone"] + "</td>";
+        var oldRecord = "<td>" + data[i]["oldRecord"] + "</td>";
+        var newRecord = "<td>" + data[i]["newRecord"] + "</td>";
+        tr.innerHTML = time + ip + personDO + personDone + oldRecord + newRecord;
+        table.children[1].appendChild(tr);
+    }
+
+    $("#recordTable>tbody tr:even").addClass("even");
+    $("#recordTable>tbody tr:odd").addClass("odd");
+    $("#recordTable tr td").css("padding","10px 15px");
+}
+function addToRecordTable(data) {
+    var table = document.getElementById("recordTable");
+    var th = table.children[0].children[0];
+    console.log(th);
     for (var i = 1; i < table.children[0].children.length; i++) {
         table.children[0].removeChild(table.children[0].children[i]);
     }
@@ -936,13 +1012,17 @@ function initRecordTable(data) {
         var oldRecord = "<td>" + data[i]["oldRecord"] + "</td>";
         var newRecord = "<td>" + data[i]["newRecord"] + "</td>";
         tr.innerHTML = time + ip + personDO + personDone + oldRecord + newRecord;
-        table.children[0].appendChild(tr);
+        table.children[1].appendChild(tr);
     }
-}
 
-// initRecordTable(recordData);
+    $("#recordTable>tbody tr:even").addClass("even");
+    $("#recordTable>tbody tr:odd").addClass("odd");
+    $("#recordTable tr td").css("padding","10px 15px");
+}
+initRecordTable(recordData);
 
 var record = [];
+var loadRecord = [];
 
 //请求查询记录
 function getRecord() {
@@ -952,7 +1032,7 @@ function getRecord() {
         type : "POST",
         processData : false,
         contentType : false,
-        success : function (data) {
+        success : function (result) {
             if(result.code == "success"){
                 for (var i = 0; i < result.data.length; i ++){
                     record[i] = result.data[i];
@@ -967,6 +1047,9 @@ function getRecord() {
         }
     });
 }
+
+
+
 
                     //设置弹窗确定按钮关闭弹窗
 $("#ok").click(function () {
