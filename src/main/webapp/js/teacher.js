@@ -546,12 +546,18 @@ function initStudentTable(data) {
     }
 }
 function getClickEvent() {
-    if(operation == 1)
+    if(operation == 1){
+        $("#modify").unbind("click");
         $("#modify").click(modify);
-    else if(operation == 2)
+    }
+    else if(operation == 2){
+        $("#modify").unbind("click");
         $("#modify").click(Delete);
-    else if(operation == 3)
+    }
+    else if(operation == 3){
+        $("#modify").unbind("click");
         $("#modify").click(resetPassword);
+    }
     else
         $("#modify").unbind("click");
 }
@@ -592,10 +598,12 @@ function getManagerPassword() {
 //修改积分
 function modify() {
     var newPoints = $("#modify-input").val();
+    console.log("修改积分");
+
     if(!newPoints){
         setErrorAlert("新积分不能为空！");
         return false;
-    };
+    }
     var reg = /^[0-9]*$/;
     if(!reg.test(newPoints)){
         setErrorAlert("请输入数字！");
@@ -692,6 +700,7 @@ function Delete() {
 //修改密码
 function resetPassword() {
     var id = $(this).attr("ids");
+    console.log("修改密码");
     var password = $("#modify-input").val();
     var Mpassword = $("#modify-input2").val();
     if(!password || !Mpassword){
