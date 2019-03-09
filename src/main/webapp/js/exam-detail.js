@@ -82,7 +82,7 @@ var wordsList = [
 function onloadExam(){
 	//请求试卷信息，数据类型如上72行
 	$.ajax({
-        url : "/getExamInfo",
+        url : "/exam/getExamInfo",
         type : "POST",
         processData : false,
         contentType : false,
@@ -100,7 +100,7 @@ function getInfo() {
         processData : false,
         contentType : false,
         success : function (data) {
-            if(data.code == 1){
+            if(data.code=="success"){
                 $("#name").html(data.name);
             }
         }
@@ -108,12 +108,12 @@ function getInfo() {
 }
 
 $("#goback").click(function () {
-    window.location.href = "/teaher";
+    window.location.href = "/teacher";
 });
 
 
 window.onload = function(){
-    onloadExam();
     getInfo();
+    onloadExam();
 }
 
