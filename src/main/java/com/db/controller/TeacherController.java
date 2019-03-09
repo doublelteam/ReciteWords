@@ -3,7 +3,6 @@ package com.db.controller;
 import com.db.dao.*;
 import com.db.model.*;
 import com.db.util.ExcelUtil;
-import com.db.util.IpUtils;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -20,8 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -40,10 +37,6 @@ public class TeacherController {
     private StudentPaperMapper studentPaperDao;
     @Autowired
     private StudentMapper studentDao;
-    @Autowired
-    private OperateRecordMapper operateRecordDao;
-
-    private SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
     @RequestMapping("/getTeacherInfo")
@@ -110,43 +103,17 @@ public class TeacherController {
 
     @RequestMapping("/changePoints")
     @ResponseBody
-    public Object changePoint(@RequestParam("id")String id,@RequestParam("newPoint")String newPoint,HttpServletRequest request) throws ParseException {
+    public Object changePoint(@RequestParam("id")String id,@RequestParam("newPoint")String newPoint){
         JSONObject result=new JSONObject();
-        HttpSession session=request.getSession();
-        String ip= IpUtils.getIpAddress(request);
         Student student=studentDao.selectByAccount(id);
-        OperateRecord or=new OperateRecord();
-        or.setIp(ip);
-        or.setBeforePoint(student.getPoints());
         student.setPoints(Long.valueOf(newPoint));
-        or.setAfterPoint(student.getPoints());
-        or.setStudentId(student.getId());
-        or.setUpdateTime(SDF.parse(SDF.format(new Date())));
-        or.setTeacherId(teacherDao.selectByAccount(session.getAttribute("username").toString()).getId());
-        operateRecordDao.insertSelective(or);
         if (studentDao.updateByPrimaryKeySelective(student)==1)
             result.put("code","success");
         else
             result.put("code","false");
         return result;
     }
-    @RequestMapping("/getRecord")
-    @ResponseBody
-    public Object getRecord(){
-        JSONArray result=new JSONArray();
-        List<OperateRecord> operateRecordList=operateRecordDao.selectAllRecord();
-        for (OperateRecord or:operateRecordList){
-            JSONObject js=new JSONObject();
-            js.put("time",SDF.format(or.getUpdateTime()));
-            js.put("ip",or.getIp());
-            js.put("personDo",teacherDao.selectByPrimaryKey(or.getTeacherId()).getAccount());
-            js.put("personDone",studentDao.selectByPrimaryKey(or.getStudentId()).getAccount());
-            js.put("oldRecord",or.getBeforePoint());
-            js.put("newRecord",or.getAfterPoint());
-            result.add(js);
-        }
-        return result;
-    }
+
 
 
 
@@ -259,59 +226,4 @@ public class TeacherController {
 
         return words;
     }
-
-    @RequestMapping("/examDetail")
-    @ResponseBody
-    public Object examDetail(@RequestParam("examId")String examId,HttpServletRequest request){
-        HttpSession session=request.getSession();
-        session.setAttribute("examId",examId);
-        JSONObject result=new JSONObject();
-        result.put("code","success");
-        return result;
-    }
-
-
-    @RequestMapping("/addUser")
-    @ResponseBody
-    public  Object addUser(@RequestParam("id")String id,@RequestParam("password")String password,@RequestParam("type")String type){
-        JSONObject result=new JSONObject();
-        if (type.equals("teacher")){
-            Teacher teacher=new Teacher();
-            teacher.setAccount(id);
-            teacher.setPassword(password);
-            if (teacherDao.insertSelective(teacher)==1){
-                result.put("code","success");
-            }else {
-                result.put("code","success");
-            }
-
-        }else if (type.equals("student")){
-            Student student=new Student();
-            student.setAccount(id);
-            student.setPassword(password);
-            student.setPoints(0l);
-            if (studentDao.insertSelective(student)==1){
-                result.put("code","success");
-            }else {
-                result.put("code","success");
-            }
-        }
-
-        return result;
-    }
-
-    @RequestMapping("/deleteStudent")
-    @ResponseBody
-    public Object deleteStudent(@RequestParam("id")String id){
-        JSONObject result=new JSONObject();
-        Student student=studentDao.selectByAccount(id);
-        if (studentDao.deleteByPrimaryKey(student.getId())==1){
-            result.put("code",1);
-        }else {
-            result.put("code",0);
-        }
-
-        return result;
-    }
-
 }
