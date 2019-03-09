@@ -262,7 +262,7 @@ function initExamList(ExamList) {
                 //删除对应id的试卷
                 success : function(data) {
                     if (data.code=="success")
-                        location.loacation.href = "/examDetail";
+                        window.location.href="/examDetail";
                 },
                 error : function() {
                     setErrorAlert("查看失败，请重试");
