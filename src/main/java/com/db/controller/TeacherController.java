@@ -6,6 +6,7 @@ import com.db.util.ExcelUtil;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -226,4 +227,16 @@ public class TeacherController {
 
         return words;
     }
+
+    @RequestMapping("/examDetail")
+    @ResponseBody
+    public Object examDetail(@RequestParam("examId")String examId,HttpServletRequest request){
+        HttpSession session=request.getSession();
+        session.setAttribute("examId",examId);
+        JSONObject result=new JSONObject();
+        result.put("code","success");
+        return result;
+    }
+
+
 }
