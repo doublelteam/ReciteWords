@@ -51,4 +51,15 @@ public class JumpController {
 
     }
 
+    @RequestMapping(value = "/examDetail")
+    public String toExam(HttpServletRequest request){
+        HttpSession seesion=request.getSession();
+        if (seesion.getAttribute("username")!=null){
+            return "exam-detail";
+        }else {
+            return "login";
+        }
+
+    }
+
 }
