@@ -4,6 +4,7 @@ import com.db.dao.*;
 import com.db.model.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,11 @@ public class ExamController {
     StudentWordMapper studentWordDao;
     @Autowired
     StudentPaperMapper studentPaperDao;
+    @Autowired
+    PaperMapper paperDao;
+
+
+
 
     @RequestMapping("/getwords")
     @ResponseBody
@@ -112,5 +118,27 @@ public class ExamController {
         return  result;
 
 
+    }
+
+    @RequestMapping("/exam/getExamInfo")
+    @ResponseBody
+    public Object getExamInfo(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        String id=session.getAttribute("examId").toString();
+        JSONArray result=new JSONArray();
+        Paper p=paperDao.selectByPrimaryKey(Long.valueOf(id));
+        List<Words> words=wordsDao.getListByPaer(Long.valueOf(id));
+        for (Words w:words){
+            JSONObject js=new JSONObject();
+            js.put("id",w.getId());
+            js.put("english",w.getEnglish());
+            js.put("chinese",w.getChinese());
+            result.add(js);
+            System.out.println(js);
+        }
+        JSONObject r=new JSONObject();
+        r.put("title",p.getName());
+        r.put("list",result);
+        return r;
     }
 }

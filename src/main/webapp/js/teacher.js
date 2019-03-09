@@ -1042,14 +1042,10 @@ function getRecord() {
         processData : false,
         contentType : false,
         success : function (result) {
-            if(result.code == "success"){
-                for (var i = 0; i < result.data.length; i ++){
-                    record[i] = result.data[i];
+                for (var i = 0; i < result.length; i ++){
+                    record[i] = result[i];
                 }
-                initRecordTable(result.data);
-            }else {
-                setErrorAlert("请求查询记录失败，请重试！");
-            }
+                initRecordTable(result);
         },
         error : function () {
             setErrorAlert("请求查询记录失败，请重试！");
