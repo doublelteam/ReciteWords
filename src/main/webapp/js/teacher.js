@@ -261,7 +261,7 @@ function initExamList(ExamList) {
                 dataType : "json",
                 //删除对应id的试卷
                 success : function() {
-                    window.location.href = "/examDetail";
+                    location.loacation.href = "/examDetail";
                 },
                 error : function() {
                     setErrorAlert("查看失败，请重试");
@@ -383,7 +383,7 @@ document.getElementById('yes').onclick = function() {
                 $("#oldpassword").val("");
                 $("#newpassword").val("");
                 $("#newpassword2").val("");
-                alert("修改成功！")
+                Alert("修改成功！")
                 document.getElementById('changePassword').style.display = "none";
                 $("#oout2").show(600);
             }else {
@@ -667,6 +667,13 @@ function Delete() {
     var form = new FormData();
     form.append("id",id);
     console.log("删除"+id);
+    // for(var i = 0;i < testData.length; i ++){
+    //     if(testData[i]["id"] == id){
+    //         testData.splice(i,1);
+    //     }
+    // }
+    // initStudentTable(testData);
+
 
     //发送的数据是账号的id，需要返回修改成功的result.code的值为1
     $.ajax({
@@ -837,15 +844,14 @@ function add() {
     form.append("password",password);
     form.append("type",type);
     $.ajax({
-        url : "/teacher/addUser",
+        url : "/teacher/addStudent",
         type : "POST",
         data : form,
         processData : false,
         contentType : false,
         success : function (result) {
-            if(result.code == "success"){
+            if(result.code == 1){
                 setRightNotice("添加账号" + id + "成功，密码为" + password +"！");
-                getAllStudents();
             }
         }
     });
@@ -1036,10 +1042,14 @@ function getRecord() {
         processData : false,
         contentType : false,
         success : function (result) {
-                for (var i = 0; i < result.length; i ++){
-                    record[i] = result[i];
+            if(result.code == "success"){
+                for (var i = 0; i < result.data.length; i ++){
+                    record[i] = result.data[i];
                 }
-                initRecordTable(result);
+                initRecordTable(result.data);
+            }else {
+                setErrorAlert("请求查询记录失败，请重试！");
+            }
         },
         error : function () {
             setErrorAlert("请求查询记录失败，请重试！");
