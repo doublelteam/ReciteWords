@@ -260,9 +260,8 @@ function initExamList(ExamList) {
                 contentType : false,
                 dataType : "json",
                 //删除对应id的试卷
-                success : function(data) {
-                    if (data.code=="success")
-                        window.location.href="/examDetail";
+                success : function() {
+                    location.loacation.href = "/examDetail";
                 },
                 error : function() {
                     setErrorAlert("查看失败，请重试");
