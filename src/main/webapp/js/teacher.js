@@ -261,7 +261,7 @@ function initExamList(ExamList) {
                 dataType : "json",
                 //删除对应id的试卷
                 success : function() {
-                    window.loacation.href = "/examDetail";
+                    window.location.href = "/examDetail";
                 },
                 error : function() {
                     setErrorAlert("查看失败，请重试");
@@ -327,12 +327,12 @@ function getTeacherInfo() {
 
 //修改密码
 var passwordContainer = document.getElementById('changePassword');
-document.getElementById('c_password').onclick = function(){
+document.getElementById('c_password').onclick = function() {
     $("#oout2").hide(700);
     $("#managerStudent").hide(700);
     $("#record").hide(700);
     $(passwordContainer).show(700);
-}
+};
 
 //检查两次输入的密码
 function checkPassword(password){
@@ -412,33 +412,33 @@ document.getElementById('cancel').onclick = function() {
 var testData = [
     {
         "id" : "1234",
-        "point" : "100",
+        "point" : "100"
     },
     {
         "id" : "3123",
-        "point" : "12",
+        "point" : "12"
     },
     {
         "id" : "3333",
-        "point" : "33",
+        "point" : "33"
     },
     {
         "id" : "444",
-        "point" : "10440",
+        "point" : "10440"
     },
     {
         "id" : "12232334",
-        "point" : "55",
+        "point" : "55"
     },
     {
         "id" : "123123213",
-        "point" : "17700",
+        "point" : "17700"
     },
     {
         "id" : "333434",
-        "point" : "1020",
+        "point" : "1020"
     }
-]
+];
 
 
 //管理学生界面
@@ -463,16 +463,6 @@ function initStudentTable(data) {
     var table = document.getElementById("studentTable").children[1];
     table.innerHTML = "";
     console.log(table);
-    // table.appendChild(ttr);
-    // var th1 = document.createElement("th");
-    // var th2 = document.createElement("th");
-    // var th3 = document.createElement("th");
-    // ttr.appendChild(th1);
-    // ttr.appendChild(th2);
-    // ttr.appendChild(th3);
-    // th1.innerHTML = "账号";
-    // th2.innerHTML = "积分";
-    // th3.innerHTML = "操作";
 
     for (var i = 0; i < data.length; i ++){
 
@@ -483,8 +473,9 @@ function initStudentTable(data) {
 
         //创建账号、积分、操作的td标签,并加入列表中
         var td1 = document.createElement("td");
-        $(td1).attr("name","id");
         td1.innerHTML = data[i]["id"];
+        $(td1).attr("ids",data[i]["ids"]);
+        $(td1).attr("name","idContainer");
         tr.appendChild(td1);
 
         var td2 = document.createElement("td");
@@ -519,6 +510,7 @@ function initStudentTable(data) {
             $("#modal4 h6").html("确定删除这个账号吗？一旦删除将无法恢复！");
             operation = 2;
             var t_id = this.parentNode.parentNode.children[0].innerHTML;
+            $("#modify").attr("ids",t_id);
             $("#modify-input").css("display","none").next().css("display","inline-block");
             getClickEvent();
         };
@@ -574,7 +566,6 @@ function getAllStudents() {
         contentType : false,
         success : function (data) {
             initStudentTable(data);
-            console.log("dasdsadas");
         },
         error : function () {
             setErrorAlert("请求学生信息失败，请刷新页面重试。");
@@ -613,7 +604,8 @@ function modify() {
         setErrorAlert("积分不能小于0");
         return false;
     }
-    var id = $(this).attr("ids");
+
+    var id = this.getAttribute("ids");
     var form = new FormData();
 
 
@@ -734,10 +726,15 @@ function search() {
     var id = $("#input").val();
     if(!id){
         $("#studentTable>tbody tr").show();
+        $("#studentTable>tbody tr:odd").addClass("odd");
+        $("#studentTable>tbody tr:even").addClass("even");
         return false;
     }
     $("#studentTable>tbody tr").hide();
-    $("#studentTable>tbody tr td[name = id]:contains(" + id + ")").parent().show();
+    var $trs = $("#studentTable>tbody tr td[name = idContainer]:contains(" + id + ")").parent();
+    $trs.show();
+    $("#studentTable>tbody tr:visible:even").removeClass().addClass("even");
+    $("#studentTable>tbody tr:visible:odd").removeClass().addClass("odd");
 }
 $("#input").keyup(search);
 $("#search").click(search);
@@ -844,14 +841,15 @@ function add() {
     form.append("password",password);
     form.append("type",type);
     $.ajax({
-        url : "/teacher/addStudent",
+        url : "/teacher/addUser",
         type : "POST",
         data : form,
         processData : false,
         contentType : false,
         success : function (result) {
-            if(result.code == 1){
+            if(result.code == "success"){
                 setRightNotice("添加账号" + id + "成功，密码为" + password +"！");
+                getAllStudents();
             }
         }
     });
@@ -929,11 +927,10 @@ $("div[class=close2]").click(function () {
 
 //查询积分页面切换
 $("#query").click(function () {
-   $("#changePassord").hide(700);
+   $("#changePassword").hide(700);
    $("#managerStudent").hide(700);
    $("#oout2").hide(700);
    $("#changePassword input").val("");
-   // console.log("dasds");
    $("#record").show(700);
    getRecord();
 });
@@ -983,27 +980,28 @@ var recordData = [
 function initRecordTable(data) {
     var table = document.getElementById("recordTable");
     var th = table.children[0].children[0];
-    console.log(th);
-    for (var i = 1; i < table.children[1].children.length; i++) {
-        table.children[1].removeChild(table.children[1].children[i]);
-    }
+    // console.log(th);
+    table.removeChild(table.children[1]);
+    var tbody = document.createElement("tbody");
+    table.appendChild(tbody);
     //清除完其余数据只剩下标题，以下加载其他数据
     for(var j = 0; j < data.length; j ++){
         var tr = document.createElement("tr");
-        var time = "<td>" + data[i]["time"] + "</td>";
-        var ip = "<td>" + data[i]["ip"] + "</td>";
-        var personDO = "<td>" + data[i]["personDo"] + "</td>";
-        var personDone = "<td>" + data[i]["personDone"] + "</td>";
-        var oldRecord = "<td>" + data[i]["oldRecord"] + "</td>";
-        var newRecord = "<td>" + data[i]["newRecord"] + "</td>";
+        var time = "<td>" + data[j]["time"] + "</td>";
+        var ip = "<td>" + data[j]["ip"] + "</td>";
+        var personDO = "<td>" + data[j]["personDo"] + "</td>";
+        var personDone = "<td>" + data[j]["personDone"] + "</td>";
+        var oldRecord = "<td>" + data[j]["oldRecord"] + "</td>";
+        var newRecord = "<td>" + data[j]["newRecord"] + "</td>";
         tr.innerHTML = time + ip + personDO + personDone + oldRecord + newRecord;
-        table.children[1].appendChild(tr);
+        tbody.appendChild(tr);
     }
-
+    console.log("记录记录");
     $("#recordTable>tbody tr:even").addClass("even");
     $("#recordTable>tbody tr:odd").addClass("odd");
     $("#recordTable tr td").css("padding","10px 15px");
 }
+
 function addToRecordTable(data) {
     var table = document.getElementById("recordTable");
     var th = table.children[0].children[0];
@@ -1028,7 +1026,7 @@ function addToRecordTable(data) {
     $("#recordTable>tbody tr:odd").addClass("odd");
     $("#recordTable tr td").css("padding","10px 15px");
 }
-initRecordTable(recordData);
+// initRecordTable(recordData);
 
 var record = [];
 var loadRecord = [];

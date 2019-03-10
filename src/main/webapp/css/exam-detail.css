@@ -50,17 +50,10 @@ body {
 	margin: 0 50px;
 }
 
-
-
-#oout2,
-#changePassword,
-#AddExam,
-#Exam_Student,
-#managerStudent,
 #wordlist{
 	display: none;
 	margin: 100px auto;
-	background-color: rgb(245,242,240);
+	/*background-color: rgb(245,242,240);*/
 	padding: 30px;
 	overflow: hidden;
 	position: relative;
@@ -117,7 +110,9 @@ body {
 }
 #listTable {
 	width: 65%;
-	margin: 70px auto;
+	margin: 70px auto 10px;
+	padding: 20px;
+	background-color: rgba(245,242,240,.8);
 }
 
 #listTable caption {
@@ -135,9 +130,51 @@ body {
 #listTable a {
 	padding: 10px;
 }
-#search-container {
-	width: 20%;
-	float: right;
-	display: block;
+
+.even {
+	background-color: #fff38f;
+}
+.odd {
+	background-color: #ffffee;
 }
 
+#searchContainer {
+	display: none;
+	position: fixed;
+	top: 80%;
+	right: 5%;
+	width: 300px;
+	overflow: hidden;
+	/*background-color: rgba(240,242,240,.7);*/
+}
+
+#searchContainer .close {
+	position: absolute;
+	top: 10px;
+	right: 0px;
+	font-size: 18px;
+}
+
+input::-webkit-input-placeholder{
+	color: #555;
+}
+input::-moz-placeholder {
+	color: black;
+}
+input:-ms-input-placeholder {
+	color: black;
+}
+input:-moz-placeholder {
+	color: black;
+}
+
+#searchContainer .close:hover {
+	cursor: pointer;
+}
+
+#searchContainer #keyword {
+	line-height: 3rem;
+	height: 3rem;
+	font-size: 18px;
+	margin: 0;
+}
