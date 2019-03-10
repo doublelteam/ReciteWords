@@ -120,9 +120,9 @@ public class TeacherController {
         or.setBeforePoint(student.getPoints());
         student.setPoints(Long.valueOf(newPoint));
         or.setAfterPoint(student.getPoints());
-        or.setStudentId(student.getId());
+        or.setStudentId(student.getAccount());
         or.setUpdateTime(SDF.parse(SDF.format(new Date())));
-        or.setTeacherId(teacherDao.selectByAccount(session.getAttribute("username").toString()).getId());
+        or.setTeacherId(session.getAttribute("username").toString());
         operateRecordDao.insertSelective(or);
         if (studentDao.updateByPrimaryKeySelective(student)==1)
             result.put("code","success");
@@ -140,8 +140,8 @@ public class TeacherController {
             JSONObject js=new JSONObject();
             js.put("time",SDF.format(or.getUpdateTime()));
             js.put("ip",or.getIp());
-            js.put("personDo",teacherDao.selectByPrimaryKey(or.getTeacherId()).getAccount());
-            js.put("personDone",studentDao.selectByPrimaryKey(or.getStudentId()).getAccount());
+            js.put("personDo",or.getTeacherId());
+            js.put("personDone",or.getStudentId());
             js.put("oldRecord",or.getBeforePoint());
             js.put("newRecord",or.getAfterPoint());
             result.add(js);
@@ -315,4 +315,15 @@ public class TeacherController {
         return result;
     }
 
+
+    @RequestMapping(value = "/resetPassword",method = RequestMethod.POST)
+    @ResponseBody
+    public Object resetPassword(@RequestParam("id")String id,@RequestParam("password")String password){
+        JSONObject result=new JSONObject();
+        Student s=studentDao.selectByAccount(id);
+        s.setPassword(password);
+        studentDao.updateByPrimaryKeySelective(s);
+        result.put("code",1);
+        return result;
+    }
 }

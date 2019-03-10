@@ -140,11 +140,11 @@ body {
 	width: 60%;
 	position: absolute;
 	top: 50px;
-	left: 350px;
+	left: 300px;
 }
 div#search-container input#input {
 	display: inline-block;
-	width: 60%;
+	width: 50%;
 	margin-right: 10px;
 }
 div#search-container a {

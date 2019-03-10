@@ -177,7 +177,7 @@
 		<div id="search-container">
 			<input id="input" type="text" placeholder="输入要搜索或添加的账号"/>
 			<a id="search" class="btn waves-effect">搜索</a>
-			<a id="add" class="btn waves-effect" href="#modal2">添加账号</a>
+			<a id="add" class="btn waves-effect" href="#modal2" >添加账号</a>
 		</div>
 
 		<table id="studentTable" border="1" style="border: 1px solid #000;text-align: center">

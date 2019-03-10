@@ -9,9 +9,9 @@ public class OperateRecord {
 
     private String ip;
 
-    private Long teacherId;
+    private String teacherId;
 
-    private Long studentId;
+    private String studentId;
 
     private Long beforePoint;
 
@@ -41,19 +41,19 @@ public class OperateRecord {
         this.ip = ip == null ? null : ip.trim();
     }
 
-    public Long getTeacherId() {
+    public String getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(Long teacherId) {
+    public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
 
-    public Long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Long studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
