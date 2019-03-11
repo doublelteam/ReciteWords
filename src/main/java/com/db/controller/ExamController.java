@@ -100,8 +100,10 @@ public class ExamController {
             sw.setGoal(0);
         }else if (point.equals("1")){
             sw.setGoal(1);
-            student.setPoints(student.getPoints()+1);
+            long p=student.getPoints()+1;
+            student.setPoints(p);
             num++;
+            studentDao.updateByPrimaryKeySelective(student);
         }
         if (studentWordDao.exitRecord(sw)==1){
             studentWordDao.updateByPrimaryKeySelective(sw);

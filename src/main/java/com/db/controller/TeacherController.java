@@ -4,11 +4,13 @@ import com.db.dao.*;
 import com.db.model.*;
 import com.db.util.ExcelUtil;
 import com.db.util.IpUtils;
+import com.db.util.md5Utils;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,7 +101,7 @@ public class TeacherController {
             result.put("code","false");
         }
         else {
-            teacher.setPassword(ne);
+            teacher.setPassword(md5Utils.encode(ne));
             if (teacherDao.updateByPrimaryKeySelective(teacher)!=1)
                 result.put("code","false");
             else
@@ -289,7 +291,7 @@ public class TeacherController {
         }else if (type.equals("student")){
             Student student=new Student();
             student.setAccount(id);
-            student.setPassword(password);
+            student.setPassword(md5Utils.encode(password));
             student.setPoints(0l);
             if (studentDao.insertSelective(student)==1){
                 result.put("code","success");
@@ -321,7 +323,7 @@ public class TeacherController {
     public Object resetPassword(@RequestParam("id")String id,@RequestParam("password")String password){
         JSONObject result=new JSONObject();
         Student s=studentDao.selectByAccount(id);
-        s.setPassword(password);
+        s.setPassword(md5Utils.encode(password));
         studentDao.updateByPrimaryKeySelective(s);
         result.put("code",1);
         return result;

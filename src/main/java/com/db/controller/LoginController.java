@@ -6,9 +6,11 @@ import com.db.dao.TeacherMapper;
 
 import com.db.model.Student;
 import com.db.model.Teacher;
+import com.db.util.md5Utils;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,12 +30,13 @@ public class LoginController {
     @RequestMapping(value = "/login",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Object login(@RequestParam(value = "username") String username,
-                        @RequestParam(value = "password") String password,
+                        @RequestParam(value = "password") String pw,
                         @RequestParam(value = "role") String role,
                         HttpServletRequest request){
         JSONObject result=new JSONObject();
         Student student=null;
         Teacher teacher=null;
+        String password= md5Utils.encode(pw);
         int bool=0;
         if (role.equals("student")){
             student=studentDao.selectByAccount(username);
