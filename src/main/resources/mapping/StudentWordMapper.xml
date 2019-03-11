@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.db.model.StudentWord" >
     <id column="student_id" property="studentId" jdbcType="BIGINT" />
     <id column="word_id" property="wordId" jdbcType="BIGINT" />
-    <result column="goal" property="goal" jdbcType="BIT" />
+    <result column="goal" property="goal" jdbcType="INTEGER" />
     <result column="paper_id" property="paperId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -25,7 +25,7 @@
   <insert id="insert" parameterType="com.db.model.StudentWord" >
     insert into student_word (student_id, word_id, goal, 
       paper_id)
-    values (#{studentId,jdbcType=BIGINT}, #{wordId,jdbcType=BIGINT}, #{goal,jdbcType=BIT}, 
+    values (#{studentId,jdbcType=BIGINT}, #{wordId,jdbcType=BIGINT}, #{goal,jdbcType=INTEGER},
       #{paperId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.db.model.StudentWord" >
@@ -52,7 +52,7 @@
         #{wordId,jdbcType=BIGINT},
       </if>
       <if test="goal != null" >
-        #{goal,jdbcType=BIT},
+        #{goal,jdbcType=INTEGER},
       </if>
       <if test="paperId != null" >
         #{paperId,jdbcType=BIGINT},
@@ -63,7 +63,7 @@
     update student_word
     <set >
       <if test="goal != null" >
-        goal = #{goal,jdbcType=BIT},
+        goal = #{goal,jdbcType=INTEGER},
       </if>
       <if test="paperId != null" >
         paper_id = #{paperId,jdbcType=BIGINT},
@@ -74,7 +74,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.db.model.StudentWord" >
     update student_word
-    set goal = #{goal,jdbcType=BIT},
+    set goal = #{goal,jdbcType=INTEGER},
       paper_id = #{paperId,jdbcType=BIGINT}
     where student_id = #{studentId,jdbcType=BIGINT}
       and word_id = #{wordId,jdbcType=BIGINT}

@@ -1,15 +1,15 @@
 package com.db.model;
 
 public class StudentWord extends StudentWordKey {
-    private Boolean goal;
+    private Integer goal;
 
     private Long paperId;
 
-    public Boolean getGoal() {
+    public Integer getGoal() {
         return goal;
     }
 
-    public void setGoal(Boolean goal) {
+    public void setGoal(Integer goal) {
         this.goal = goal;
     }
 

@@ -185,7 +185,7 @@ function submit() {
     if (tem == an) {
         form.append("result","1");
         $.ajax({
-           url : "/student/submit",
+           url : "/exam/submit",
            type : "POST",
            data : form,
            processData : false,
@@ -222,7 +222,7 @@ function submit() {
     }else {
         form.append("result","0");
         $.ajax({
-           url : "/student/submit",
+           url : "/exam/submit",
            type : "POST",
            data : form,
            processData : false,

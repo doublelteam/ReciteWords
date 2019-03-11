@@ -70,13 +70,16 @@ public class StudentController {
     }
     @RequestMapping("/beginExam")
     @ResponseBody
-    public Object beginExam(@RequestParam(value = "id") String paperId,HttpServletRequest request){
+    public Object beginExam(@RequestParam(value = "id") String paperId,@RequestParam(value = "num") String wordNum,HttpServletRequest request){
         JSONObject result=new JSONObject();
         HttpSession session=request.getSession();
         String id=session.getAttribute("username").toString();
         if (session.getAttribute("paperId")!=null)
             session.removeAttribute("paperId");
         session.setAttribute("paperId",paperId);
+        if (session.getAttribute("wordNum")!=null)
+            session.removeAttribute("wordNum");
+        session.setAttribute("wordNum",wordNum);
         result.put("code","success");
         return result;
     }
