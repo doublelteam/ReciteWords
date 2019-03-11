@@ -2,16 +2,6 @@ body {
 	background: url(../images/student-bgi.jpg);
 	background-attachment:fixed;
 }
-#menu {
-	background-color: rgb(238,110,115);
-	border: 0;
-	height: 64px;
-	margin: 0;
-	margin-right: 20px;
-}
-#menu:hover {
-	background-color: rgb(214,99,103)
-}
 .brand-logo {
 	margin-left: 18%;
 }
@@ -141,8 +131,8 @@ body {
 #searchContainer {
 	display: none;
 	position: fixed;
-	top: 80%;
-	right: 5%;
+	top: 55%;
+	right: 10%;
 	width: 300px;
 	overflow: hidden;
 	/*background-color: rgba(240,242,240,.7);*/
@@ -177,4 +167,39 @@ input:-moz-placeholder {
 	height: 3rem;
 	font-size: 18px;
 	margin: 0;
+}
+
+/*侧边菜单*/
+#menu {
+	position: fixed;
+	top: 40%;
+	right: 5%;
+}
+
+#menu li {
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	/*padding: 20px;*/
+	width: 50px;
+	height: 50px;
+    display: block;
+    /*background-color: red;*/
+    text-align: center;
+    position: relative;
+    margin: 10px auto;
+}
+#menu li a {
+    position: absolute;
+    display: block;
+    width: 30px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -15px;
+    color: black;
+}
+#menu li:hover {
+    cursor: pointer;
 }

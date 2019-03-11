@@ -1,3 +1,11 @@
+$(document).ready(function() {
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+});
+
+$("#logout").click(function () {
+    location.href = "/student";
+});
 document.getElementById("word-content").style.display = "block";
 var words=[];
 var chinese=[];
@@ -7,6 +15,7 @@ var words2=[];
 var chinese2=[];
 var ids2=[];
 
+//用于构造选择题
 var words3 = [];
 var chinese3 = [];
 
@@ -17,7 +26,6 @@ var begin=0;
 var end=0;
 var nums=0;
 var now=0;
-var times=0;
 function getWords() {
 	$.ajax({
         url : "/getwords",
@@ -49,18 +57,7 @@ function getStudentInfo(){
         }
     })
 }
-//{
-// [
-// "id":"1",
-// "english":"apple",
-// "chinese":"苹果"
-// ],
-// "id":"2",
-// "english":"banana",
-// "chinese":"香蕉"
-// ],
-// 	}
-//
+
 //
 var wordsList = [
 	{
@@ -107,10 +104,6 @@ function initWords(data){
         chinese3.push(data[i].chinese);
 		nums+=1;
 	}
-    // words.push(data[0].english);
-    // ids.push(data[0].id);
-    // chinese.push(data[0].chinese);
-    // nums+=1;
 	initContent();
 }
 function initContent(){
@@ -141,7 +134,6 @@ function initContent(){
         //背完单词切换按钮
         $("#begin-btn").attr("style","display:block;");
         $("#next-btn").attr("style","display:none;");
-        times+=1;
     }
 }
 
@@ -167,44 +159,93 @@ function nextWord2() {
 }
 
 
+
+        //nextWord2和submit,jumpword为第二轮的函数。无论对错都放到第二个数组里面
+
+
+
 function submit() {
     var an = $("#answer").val();
     var tem;
     var tem2;
     tem = words.shift();
     tem2 = ids.shift();
-    console.log(tem);
-    console.log(an);
-    //判断作答与答案是否相等
-    if (tem == an){
-        $("#chinese-p").attr("style","color:green;text-align: center");
-        $("#english-p2").attr("style","color:green;text-align: center");
-        document.getElementById("english-p2").innerHTML = tem;
-        $("#submit-btn").attr("style","display:none;");
-        ids2.push(tem2);  //第二轮将拼写正确的放入表示正确的数组里面
-        words2.push(tem);
 
-        if (ids2.length == nums){
-            // console.log(rightId.length);
-            document.getElementById("progress").innerHTML = ids2.length + "/" + nums;
-            setTimeout(function () {
-                $("#submit-btn").attr("style","display:none;");
-                $("#test-btn").attr("style","display:block;");
-            },2000);
-            return;
-        }
-        setTimeout(jumpWord,2000);
-    } else {
-        words.push(tem);
-        ids.push(tem2);
-        chinese.push(chinese2.pop());
-        $("#chinese-p").attr("style","color:red;text-align: center");
-        //worngId.push(tem2);
-        $("#english-p2").attr("style","color:red;text-align: center");
-        document.getElementById("english-p2").innerHTML=tem;
-		// chinese.push(document.getElementById("chinese-p").innerHTML);
-		$("#submit-btn").attr("style","display:none;");
-		$("#next-btn2").attr("style","display:block;");
+    var flag = 1;
+    var form = new FormData();
+    form.append("id",tem2);
+
+    $("#submit-btn").attr("disabled");
+
+    //判断作答与答案是否相等
+    if (tem == an) {
+        form.append("result","1");
+        $.ajax({
+           url : "/student/submit",
+           type : "POST",
+           data : form,
+           processData : false,
+           contentType : false,
+           success : function (result) {
+               if(result.code == "success") {
+                   setRightNotice("提交结果成功！");
+                   $("#chinese-p").attr("style", "color:green;text-align: center");
+                   $("#english-p2").attr("style", "color:green;text-align: center");
+                   document.getElementById("english-p2").innerHTML = tem;
+                   $("#submit-btn").removeAttr("disabled");
+                   $("#submit-btn").attr("style", "display:none;");
+                   ids2.push(tem2);  //第二轮将拼写正确的放入表示正确的数组里面
+                   words2.push(tem);
+                   if (ids2.length == nums) {
+                       document.getElementById("progress").innerHTML = ids2.length + "/" + nums;
+                       setTimeout(function () {
+                           $("#submit-btn").attr("style", "display:none;");
+                           $("#test-btn").attr("style", "display:block;");
+                       }, 2000);
+                       return;
+                   }
+                   setTimeout(jumpWord, 2000);
+               }else{
+                   chinese.push(chinese2.pop());
+                   setErrorAlert("服务器处理失败，请重试！");
+                   $("#submit-btn").removeAttr("disabled");
+               }
+           },
+            error : function () {
+                setErrorAlert("无法将结果提交到服务器，请重试！");
+                $("#submit-btn").removeAttr("disabled");
+            }
+        });
+    }else {
+        form.append("result","0");
+        $.ajax({
+           url : "/student/submit",
+           type : "POST",
+           data : form,
+           processData : false,
+           contentType : false,
+            success : function (result) {
+               if(result.code == "success"){
+                   $("#submit-btn").removeAttr("disabled");
+                   words2.push(tem);
+                   ids2.push(tem2);
+                   $("#chinese-p").attr("style","color:red;text-align: center");
+                   $("#english-p2").attr("style","color:red;text-align: center");
+                   document.getElementById("english-p2").innerHTML=tem;
+                   $("#submit-btn").attr("style","display:none;");
+                   $("#next-btn2").attr("style","display:block;");
+               }else{
+                   chinese.push(chinese2.pop());
+                   setErrorAlert("服务器处理失败，请重试！");
+                   $("#submit-btn").removeAttr("disabled");
+               }
+            },
+            error : function () {
+                setErrorAlert("无法将结果提交到服务器，请重试！");
+                $("#submit-btn").removeAttr("disabled");
+            }
+        });
+
     }
 }
 
@@ -240,7 +281,7 @@ window.onload=function () {
 	getWords();
     li_onclick();
     getStudentInfo();
-}
+};
 
 //为每个li标签注册点击事件
 var lis = document.getElementById("uu").getElementsByTagName("li");
@@ -324,7 +365,7 @@ function nextword3() {
     chinese.push(c_tem);
 }
 
-//第三轮提交（选择题,一词提交一次）
+//第三轮提交（选择题,校对正确答案，提交代码已经去除）
 function submit2() {
     //取得作答结果，与正确答案比较。正确切换下一个，不正确显示next按钮。
     var an;
@@ -347,33 +388,33 @@ function submit2() {
     console.log(an);
     //判断作答与答案是否相等
     if (tem3 == an){
-        //提交情况数据为
-        //  {
-        //    "id" : 题目id,
-        //    "result" : "true"为正确，"false"为错误
-        //  }
-        //接口都为"/submit"
-        var form = new FormData();
-        form.append("id",tem2);
-        form.append("result","true");
-        $.ajax({
-            url : "/submit",
-            type : "POST",
-            data : form,
-            processData : false,
-            contentType : false,
-            dataType : "json",
-            success : function (result) {
-                if(result != "success"){
-                    setErrorAlert("上传失败，请重新提交");
-                    return false;
-                }
-            },
-            error : function () {
-                setErrorAlert("网络原因与服务器通讯失败，请重试");
-                return false;
-            }
-        });
+        // //提交情况数据为
+        // //  {
+        // //    "id" : 题目id,
+        // //    "result" : "true"为正确，"false"为错误
+        // //  }
+        // //接口都为"/submit"
+        // var form = new FormData();
+        // form.append("id",tem2);
+        // form.append("result","true");
+        // $.ajax({
+        //     url : "/submit",
+        //     type : "POST",
+        //     data : form,
+        //     processData : false,
+        //     contentType : false,
+        //     dataType : "json",
+        //     success : function (result) {
+        //         if(result != "success"){
+        //             setErrorAlert("上传失败，请重新提交");
+        //             return false;
+        //         }
+        //     },
+        //     error : function () {
+        //         setErrorAlert("网络原因与服务器通讯失败，请重试");
+        //         return false;
+        //     }
+        // });
         for(var i = 0; i < lis.length; i++){
             if(lis[i].children[1].innerHTML == tem3){
                 lis[i].style.backgroundColor = "green";
@@ -391,27 +432,27 @@ function submit2() {
         $("#submit-btn2").attr("style","display:none;");
         $("#next-btn3").attr("style","display:block;");
     } else {
-        var form = new FormData();
-        form.append("id",tem2);
-        form.append("result","false");
-        $.ajax({
-            url : "/submit",
-            type : "POST",
-            data : form,
-            processData : false,
-            contentType : false,
-            dataType : "json",
-            success : function (result) {
-                if(result != "success"){
-                    setErrorAlert("上传失败，请重新提交");
-                    return false;
-                }
-            },
-            error : function () {
-                setErrorAlert("网络原因与服务器通讯失败，请重试");
-                return false;
-            }
-        });
+        // var form = new FormData();
+        // form.append("id",tem2);
+        // form.append("result","false");
+        // $.ajax({
+        //     url : "/submit",
+        //     type : "POST",
+        //     data : form,
+        //     processData : false,
+        //     contentType : false,
+        //     dataType : "json",
+        //     success : function (result) {
+        //         if(result != "success"){
+        //             setErrorAlert("上传失败，请重新提交");
+        //             return false;
+        //         }
+        //     },
+        //     error : function () {
+        //         setErrorAlert("网络原因与服务器通讯失败，请重试");
+        //         return false;
+        //     }
+        // });
         words2.push(words.pop());
         ids2.push(ids.pop());
         chinese2.push(chinese.pop());

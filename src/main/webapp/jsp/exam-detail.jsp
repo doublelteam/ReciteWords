@@ -63,17 +63,12 @@
 </div>
 
 <!--底部菜单-->
-<div class="fixed-action-btn">
-    <a class="btn-floating btn-large red">
-        :::
-    </a>
-    <ul>
-        <li><a id="more" class="btn-floating red">更多</a></li>
-        <li><a id="less" class="btn-floating yellow darken-1">收起</a></li>
-        <li><a id="search" class="btn-floating green" onclick="setDisabled()">搜索</a></li>
-        <li><a id="top" class="btn-floating blue" href="#listTable">顶部</a></li>
-    </ul>
-</div>
+<ul id="menu">
+    <li class="red"><a id="more">更多</a></li>
+    <li class="yellow darken-1"><a id="less">收起</a></li>
+    <li class="green"><a id="search" onclick="setDisabled()">搜索</a></li>
+    <li class="blue"><a id="top" href="#listTable">顶部</a></li>
+</ul>
 
 <div id="searchContainer">
     <input id=keyword placeholder="请输入想要搜索的单词或中文释义"/>
