@@ -149,9 +149,7 @@ function nextWord2() {
     if (rightId.length == 0){
         $("#answer").attr('placeholder','请在此拼写单词');
     }
-    console.log(chinese);
     tem = chinese.shift();
-    console.log(chinese);
     document.getElementById("english-p").innerHTML = tem;
 
     //将取出的中文释义放到正确的数组里---修改1
@@ -192,7 +190,6 @@ function submit() {
            contentType : false,
            success : function (result) {
                if(result.code == "success") {
-                   setRightNotice("提交结果成功！");
                    $("#chinese-p").attr("style", "color:green;text-align: center");
                    $("#english-p2").attr("style", "color:green;text-align: center");
                    document.getElementById("english-p2").innerHTML = tem;
@@ -200,6 +197,10 @@ function submit() {
                                     .attr("style", "display:none;");
                    ids2.push(tem2);  //第二轮将拼写正确的放入表示正确的数组里面
                    words2.push(tem);
+
+                   console.log(chinese);
+                   console.log(ids);
+                   console.log(words);
                    if (ids2.length == nums) {
                        document.getElementById("progress").innerHTML = ids2.length + "/" + nums;
                        setTimeout(function () {
@@ -232,11 +233,23 @@ function submit() {
                    $("#submit-btn").removeAttr("disabled").attr("style","display:none;");;
                    words2.push(tem);
                    ids2.push(tem2);
+
+
+                   console.log(chinese);
+                   console.log(ids);
+                   console.log(words);
                    $("#chinese-p").attr("style","color:red;text-align: center");
                    $("#english-p2").attr("style","color:red;text-align: center");
                    document.getElementById("english-p2").innerHTML=tem;
 
-                   $("#next-btn2").attr("style","display:block;");
+                   $("#next-btn2").attr("style","display:block");
+                   if (ids2.length == nums) {
+                       document.getElementById("progress").innerHTML = ids2.length + "/" + nums;
+                       $("#submit-btn").attr("style", "display:none;");
+                       $("#next-btn2").attr("style","display:none");
+                       $("#test-btn").attr("style", "display:block;");
+                       return false;
+                   }
                }else{
                    setErrorAlert("服务器处理失败，请重试！");
                    $("#submit-btn").removeAttr("disabled");

@@ -19,8 +19,8 @@
     <div class="nav-wrapper">
       <a class="brand-logo">单词贝多芬</a>
       <ul class="right">
-        <li><a class="waves-effect" href="#">名字</a></li>
-        <li><a class="waves-effect" href="#">积分</a></li>
+        <li><a id="name" class="waves-effect" href="#">名字</a></li>
+        <li><a id="points" class="waves-effect" href="#">积分</a></li>
         <li><a class="waves-effect" href="#modal1">退出</a></li>
       </ul>
     </div>
