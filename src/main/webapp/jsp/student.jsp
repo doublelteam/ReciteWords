@@ -27,15 +27,15 @@
   	</nav>
     </div>
     <!-- 退出账号提示 -->
-	<div id="modal1" class="modal l6">
-    	<div class="modal-content">
-      		<h6>你确定退出当前账号吗？</h6>
-    	</div>
-    	<div class="modal-footer">
-      		<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" id="logout">确定</a>
-      		<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">取消</a>
-    	</div>
-  	</div>
+	<div id="modal1" class="modal">
+		<div class="header">
+			<div class="tip"><h6>你确定退出当前账号吗？</h6></div>
+		</div>
+		<div class="footer">
+			<a href="#!" class="modal-close waves-effect" id="logout">确定</a>
+			<a href="#!" class="modal-close waves-effect">取消</a>
+		</div>
+	</div>
 
 
     <!-- 等待完成的考试 -->

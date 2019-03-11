@@ -6,7 +6,7 @@
   <title>单词贝多芬</title>
   <link rel="stylesheet" href="../css/materialize.min.css">
   <link rel="stylesheet" href="../css/icomoon.css">
-  <link rel="stylesheet" href="../css/student.css">
+  <link rel="stylesheet" href="../css/exam.css">
   <link rel="icon" href="../images/logo.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="../images/logo.ico" type="image/x-icon" />
   <link rel="bookmark" href="../images/logo.ico" type="image/x-icon" />
@@ -29,14 +29,14 @@
 
 
 <!-- 退出账号提示 -->
-<div id="modal1" class="modal l6">
-  <div class="modal-content">
-    <h6>你确定退出吗？本次进度将不会保存</h6>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" id="logout">确定</a>
-    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">取消</a>
-  </div>
+<div id="modal1" class="modal">
+    <div class="header">
+        <div class="tip"><h6>系统将不会保存进度，你确定退出吗？</h6></div>
+    </div>
+    <div class="footer">
+        <a href="#!" class="modal-close waves-effect" id="logout">确定</a>
+        <a href="#!" class="modal-close waves-effect">取消</a>
+    </div>
 </div>
 
 
@@ -101,6 +101,17 @@
     <div><h5>error</h5></div>
     <div ><a href="#" id="ok">确定</a></div>
   </div>
+</div>
+
+<%--确认离开--%>
+<div id="modal3" class="modal">
+    <div class="header">
+        <div class="tip"><h6>系统将不会保存您的作答，确定继续重载页面吗？</h6></div>
+    </div>
+    <div class="footer">
+        <a href="#!" class="modal-close waves-effect" id="sure">确定</a>
+        <a href="#!" class="modal-close waves-effect">取消</a>
+    </div>
 </div>
 
 <script src="../js/jquery.min.js"></script>

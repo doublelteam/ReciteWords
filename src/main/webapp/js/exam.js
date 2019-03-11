@@ -171,13 +171,17 @@ function submit() {
     tem = words.shift();
     tem2 = ids.shift();
 
-    var flag = 1;
     var form = new FormData();
-    form.append("id",tem2);
+    form.append("id", tem2);
 
     $("#submit-btn").attr("disabled");
 
     //判断作答与答案是否相等
+    //提交答案数据
+    //{
+    //    "id" : 单词id，
+    //    "result" : "0"表示错误，"1"表示正确
+    //}
     if (tem == an) {
         form.append("result","1");
         $.ajax({
@@ -192,8 +196,8 @@ function submit() {
                    $("#chinese-p").attr("style", "color:green;text-align: center");
                    $("#english-p2").attr("style", "color:green;text-align: center");
                    document.getElementById("english-p2").innerHTML = tem;
-                   $("#submit-btn").removeAttr("disabled");
-                   $("#submit-btn").attr("style", "display:none;");
+                   $("#submit-btn").removeAttr("disabled")
+                                    .attr("style", "display:none;");
                    ids2.push(tem2);  //第二轮将拼写正确的放入表示正确的数组里面
                    words2.push(tem);
                    if (ids2.length == nums) {
@@ -206,7 +210,6 @@ function submit() {
                    }
                    setTimeout(jumpWord, 2000);
                }else{
-                   chinese.push(chinese2.pop());
                    setErrorAlert("服务器处理失败，请重试！");
                    $("#submit-btn").removeAttr("disabled");
                }
@@ -226,16 +229,15 @@ function submit() {
            contentType : false,
             success : function (result) {
                if(result.code == "success"){
-                   $("#submit-btn").removeAttr("disabled");
+                   $("#submit-btn").removeAttr("disabled").attr("style","display:none;");;
                    words2.push(tem);
                    ids2.push(tem2);
                    $("#chinese-p").attr("style","color:red;text-align: center");
                    $("#english-p2").attr("style","color:red;text-align: center");
                    document.getElementById("english-p2").innerHTML=tem;
-                   $("#submit-btn").attr("style","display:none;");
+
                    $("#next-btn2").attr("style","display:block;");
                }else{
-                   chinese.push(chinese2.pop());
                    setErrorAlert("服务器处理失败，请重试！");
                    $("#submit-btn").removeAttr("disabled");
                }
