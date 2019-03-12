@@ -648,14 +648,14 @@ function Delete() {
         setErrorAlert("管理密码不能为空");
         return false;
     }
-    if(!ManagerPassword){
-        setErrorAlert("无法进行密码验证。请刷新页面重试");
-        return false;
-    }
-    if(!t == ManagerPassword){
-        setErrorAlert("管理密码错误！");
-        return false;
-    }
+    // if(!ManagerPassword){
+    //     setErrorAlert("无法进行密码验证。请刷新页面重试");
+    //     return false;
+    // }
+    // if(!t == ManagerPassword){
+    //     setErrorAlert("管理密码错误！");
+    //     return false;
+    // }
     var form = new FormData();
     form.append("id",id);
     console.log("删除"+id);
@@ -809,7 +809,7 @@ $("#modal2 div input").bind("focus",function () {
 function add() {
     var id = t_name;
     if(!id){
-        setErrorAlert("请输入账号！")
+        setErrorAlert("请输入账号！");
         return false;
     }
 
@@ -830,16 +830,14 @@ function add() {
         setErrorAlert("请选择账号类型！");
 
 
-    if(type == "teacher"){
-        var managerPa = $("#managerPassword").val();
-        if(managerPa != ManagerPassword)
-            return false;
-    }
-
     var form = new FormData();
     form.append("id",id);
     form.append("password",password);
     form.append("type",type);
+    if(type == "teacher"){
+        var managerPa = $("#managerPassword").val();
+        form.append("managerpassword",managerPa);
+    }
     $.ajax({
         url : "/teacher/addUser",
         type : "POST",
@@ -848,7 +846,7 @@ function add() {
         contentType : false,
         success : function (result) {
             if(result.code == "success"){
-                setRightNotice("添加账号" + id + "成功，密码为" + password +"！");
+                setRightNotice("添加账号" + id + "成功，密码为" + password + "！");
                 getAllStudents();
             }
         }

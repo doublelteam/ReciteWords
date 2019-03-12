@@ -22,6 +22,17 @@
 		<input name="" type="button" id="login" value="登陆"></input>
 	</form>
 
+	<!—-错误弹框—->
+	<div class="mask"></div>
+	<div id="error">
+		<div id="photo">
+			<img src="../images/alert.gif" alt="" width="100%" height="100%">
+		</div>
+		<div id="information">
+			<div><h5>error</h5></div>
+			<div ><a href="#" id="ok">确定</a></div>
+		</div>
+	</div>
 	 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="../js/login.js"></script>
 </body>

@@ -52,7 +52,7 @@ body {
     display: none;
     border: 1px solid black;
     position: absolute;
-    margin: -158px 0 0 -124px;
+    margin: -160px 0 0 -151px;
     top: 50%;
     left: 50%;
     background-color: #fff;
@@ -213,4 +213,9 @@ div#modal1.modal {
     top: 50%;
     left: 50%;
     margin: -20px 0 0 -250px;
+}
+
+/*设置第三轮选择题目*/
+#title {
+    font-size: 22px;
 }

@@ -198,9 +198,9 @@ function submit() {
                    ids2.push(tem2);  //第二轮将拼写正确的放入表示正确的数组里面
                    words2.push(tem);
 
-                   console.log(chinese);
-                   console.log(ids);
-                   console.log(words);
+                   //console.log(chinese);
+                   //console.log(ids);
+                   //console.log(words);
                    if (ids2.length == nums) {
                        document.getElementById("progress").innerHTML = ids2.length + "/" + nums;
                        setTimeout(function () {
@@ -235,9 +235,9 @@ function submit() {
                    ids2.push(tem2);
 
 
-                   console.log(chinese);
-                   console.log(ids);
-                   console.log(words);
+                   //console.log(chinese);
+                   //console.log(ids);
+                   //console.log(words);
                    $("#chinese-p").attr("style","color:red;text-align: center");
                    $("#english-p2").attr("style","color:red;text-align: center");
                    document.getElementById("english-p2").innerHTML=tem;
@@ -333,7 +333,7 @@ function nextword3() {
     var c_tem = chinese2.shift();
     var w_tem = words2.shift();
     var i_tem = ids2.shift();
-    var str = "单词" + "<span class='title'>" + w_tem + "</span>" + "的中文意思是？";
+    var str = "单词" + "<span class='word'>" + w_tem + "</span>" + "的中文意思是？";
     $("#title").html(str);
 
     for (var i = 0; i < lis.length; i++) {
@@ -344,7 +344,7 @@ function nextword3() {
     }
     //构建正确选项
     var t = Math.round( (Math.random() * 4) )% 4;
-    console.log(t);
+    // console.log(t);
     lis[t].children[1].innerHTML = c_tem;
 
     //构建其他三个选项
@@ -353,8 +353,8 @@ function nextword3() {
     var flag;
     for(;index < 3;){
         var t2 = Math.round(Math.random() * words3.length);
-        console.log(words3);
-        console.log("t2" + t2);
+        // console.log(words3);
+        // console.log("t2" + t2);
         if(t2 == words3.length)
             continue;
         for(j = 0;j < lis.length; j++){
@@ -369,7 +369,7 @@ function nextword3() {
                 if(flag == 1){
                     lis[j].children[1].innerHTML = chinese3[t2];
                     index ++;
-                    console.log("index" + index);
+                    // console.log("index" + index);
                 }
             }
         }
@@ -397,10 +397,10 @@ function submit2() {
     tem = words[words.length-1];
     tem2 = ids[ids.length-1];
     tem3 = chinese[chinese.length-1];
-    console.log(tem3);
-    console.log("id" + tem2);
-    console.log(ids);
-    console.log(an);
+    // console.log(tem3);
+    // console.log("id" + tem2);
+    // console.log(ids);
+    // console.log(an);
     //判断作答与答案是否相等
     if (tem3 == an){
         // //提交情况数据为
@@ -433,10 +433,9 @@ function submit2() {
         for(var i = 0; i < lis.length; i++){
             if(lis[i].children[1].innerHTML == tem3){
                 lis[i].style.backgroundColor = "green";
-                console.log("fff");
             }
         }
-        console.log("ids长度" + ids.length);
+        //console.log("ids长度" + ids.length);
         if (ids.length == nums){
             // console.log(rightId.length);
             document.getElementById("progress").innerHTML = ids.length + "/" + nums;

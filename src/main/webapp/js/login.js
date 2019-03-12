@@ -1,9 +1,9 @@
 document.getElementById("login").onclick = function(){
 	if(!checkPassword()){
-		alert("密码位数需6-20位！");
+		setErrorAlert("密码位数需6-20位！");
 		return false;
 	}
-	console.log("s");
+	// console.log("s");
 	var form = new FormData();
 	var uname = document.getElementById('userName').value;
 	var pword = document.getElementById('passWord').value;
@@ -14,7 +14,7 @@ document.getElementById("login").onclick = function(){
 			role = radios[i].id;
 	}
 	if(!role || ! uname ){
-		alert("账号或身份类型不能为空！");
+		setErrorAlert("账号或身份类型不能为空！");
 		return false;
 	}
 	form.append("username",uname);
@@ -34,7 +34,7 @@ document.getElementById("login").onclick = function(){
                     window.location.href="/teacher";
                 }
 			}else {
- 					alert(result.msg);
+ 					setErrorAlert(result.msg);
 			}
 		}
 	});
@@ -52,4 +52,22 @@ function checkPassword(){
 		flag = 0;
 	}
 	return flag;
+}
+
+//设置弹窗确定按钮关闭弹窗
+$("#ok").click(function () {
+    $(".mask").css("display","none");
+    $("#error").css("display","none");
+});
+function setErrorAlert(str) {
+    $("#photo img").attr("src","../images/alert.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
+}
+function setRightNotice(str) {
+    $("#photo img").attr("src","../images/happy.gif");
+    $(".mask").css("display","block");
+    $("#error").css("display","block");
+    $("#error h5").text(str);
 }
