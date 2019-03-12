@@ -658,6 +658,7 @@ function Delete() {
     // }
     var form = new FormData();
     form.append("id",id);
+    form.append("managerpassword",t);
     console.log("删除"+id);
     // for(var i = 0;i < testData.length; i ++){
     //     if(testData[i]["id"] == id){
@@ -675,12 +676,11 @@ function Delete() {
         processData : false,
         contentType : false,
         success : function (result) {
-            if(result.code == 1){
+            if(result.code == "success"){
                 setRightNotice("删除账号成功！");
                 getAllStudents();
-            }
-            else {
-                setErrorAlert("修改账号失败！");
+            }else {
+                setErrorAlert(result.msg);
             }
         },
         error : function () {
@@ -702,6 +702,7 @@ function resetPassword() {
     var form = new FormData();
     form.append("id",id);
     form.append("password",password);
+    form.append("managerpassword",Mpassword);
     console.log("重置id"+ id);
     $.ajax({
        url : "/teacher/resetPassword",
@@ -848,7 +849,12 @@ function add() {
             if(result.code == "success"){
                 setRightNotice("添加账号" + id + "成功，密码为" + password + "！");
                 getAllStudents();
+            }else{
+                setErrorAlert(result.msg);
             }
+        },
+        error : function () {
+            setErrorAlert("向服务器发送请求失败，请重试！");
         }
     });
 }
