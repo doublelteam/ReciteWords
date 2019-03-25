@@ -48,7 +48,7 @@
     <div class="input-field inline">
       <input class="validate" style="display:none;font-size: 50px;text-align: center">
     </div>
-    <p id="english-p" style="text-align: center" >
+    <p id="english-p" style="text-align: center">
     </p>
     
   </div>
@@ -59,10 +59,11 @@
     <div class="input-field inline" style="margin-top: 70px;">
       <input id="answer" class="validate" style="display:none;font-size: 50px;text-align: center;">
     </div>
-    <p id="english-p2" style="color:red;text-align: center" ></p>
+    <p id="english-p2" style="color:red;text-align: center"  ></p>
 
     <p id="chinese-p" style="text-align: center"></p>
   </div>
+
 
 
   <div class="question" id=test-content style="display: none">
@@ -89,6 +90,14 @@
     <button id="test-btn" class="btn waves-effect orange darken-1" style="display:none" onclick="test()">TEST</button>
     <button id="end-btn" class="btn waves-effect orange darken-1" style="display:none">END</button>
   </div>
+    <div class="learn" id="audioContainer">
+        <audio id="au" src="../music/Aachen.wav" preload="auto" >
+            您的浏览器不支持 audio 元素。
+        </audio>
+        <i id="play" class="icon-play2"></i>
+        <span id="time"></span>
+    </div>
+
 </div>
 
 <!—-错误弹框—->

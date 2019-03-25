@@ -33,6 +33,8 @@
 			<div ><a href="#" id="ok">确定</a></div>
 		</div>
 	</div>
+
+
 	 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="../js/login.js"></script>
 </body>

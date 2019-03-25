@@ -33,10 +33,11 @@ body {
 
 #word-content{
     margin: 100px auto;
-    background-color: rgb(245,242,240);
+    background: url("../images/exambgc.jpg") center center;
     padding: 50px;
     z-index: 1;
     height: 420px;
+    /*overflow: hidden;*/
 }
 #english-content{
     height: 80%;width: 45%;color: black;float: left;
@@ -218,4 +219,23 @@ div#modal1.modal {
 /*设置第三轮选择题目*/
 #title {
     font-size: 22px;
+}
+
+.learn {
+    position: absolute;
+    bottom: 27%;
+    left: 22%;
+}
+.chose {
+    position: absolute;
+    bottom: 73%;
+    left: 35%;
+
+}
+#audioContainer i{
+    font-size: 40px;
+    /*display: none;*/
+}
+#audioContainer i:hover {
+    cursor: pointer;
 }

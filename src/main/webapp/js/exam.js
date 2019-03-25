@@ -10,10 +10,14 @@ document.getElementById("word-content").style.display = "block";
 var words=[];
 var chinese=[];
 var ids=[];
+var urls=[];
 
 var words2=[];
 var chinese2=[];
 var ids2=[];
+var urls2 =[];
+//音频
+var au = document.getElementById("au");
 
 //用于构造选择题
 var words3 = [];
@@ -33,7 +37,10 @@ function getWords() {
         processData : false,
         contentType : false,
         success: function(result){
-            initWords(result);
+            if(result)
+                initWords(result);
+            else
+                setErrorAlert("初始化单词失败！");
         }
 	});
 }
@@ -59,39 +66,45 @@ function getStudentInfo(){
 }
 
 //
-var wordsList = [
-	{
-        "id":"1",
-        "english":"apple",
-        "chinese":"苹果"
-	},
-    {
-        "id":"2",
-        "english":"banana",
-        "chinese":"香蕉"
-    },{
-        "id":"3",
-        "english":"apple",
-        "chinese":"苹果"
-    },
-    {
-        "id":"4",
-        "english":"banana",
-        "chinese":"香蕉"
-    },{
-        "id":"5",
-        "english":"apple",
-        "chinese":"苹果"
-    },
-    {
-        "id":"6",
-        "english":"banana",
-        "chinese":"香蕉"
-    }
-]
+// var wordsList = [
+// 	{
+//         "id":"1",
+//         "english":"apple",
+//         "chinese":"苹果"
+// 	},
+//     {
+//         "id":"2",
+//         "english":"banana",
+//         "chinese":"香蕉",
+//          "url" : "路径"
+//     },{
+//         "id":"3",
+//         "english":"apple",
+//         "chinese":"苹果"
+//     },
+//     {
+//         "id":"4",
+//         "english":"banana",
+//         "chinese":"香蕉"
+//     },{
+//         "id":"5",
+//         "english":"apple",
+//         "chinese":"苹果"
+//     },
+//     {
+//         "id":"6",
+//         "english":"banana",
+//         "chinese":"香蕉"
+//     }
+// ]
+
+//urls = ["../music/Aachen.wav","../music/Aare.wav","../music/Aar.wav","../music/aalii.wav"];
+
 // initWords(wordsList);
 // 
 // 初始化各个数组，将英文中文id等数据放入数组
+
+
 function initWords(data){
 	begin = data[0].id;
 	end = data[data.length-1].id;
@@ -99,6 +112,7 @@ function initWords(data){
 		words.push(data[i].english);
 		ids.push(data[i].id);
 		chinese.push(data[i].chinese);
+        urls.push(data[i].urls);
 
         words3.push(data[i].english);
         chinese3.push(data[i].chinese);
@@ -113,6 +127,11 @@ function initContent(){
     document.getElementById("progress").innerHTML = now + "/" + nums;
     $("#english-p2").attr("style","display:none");
     $("#chinese-p").attr("style","color:black;text-align: center");
+
+    tem = urls.shift();
+    au.src = tem;
+    au.play();
+    urls.push(tem);
 
     //取出单词并放入页面
     tem = words.shift();
@@ -151,9 +170,12 @@ function nextWord2() {
     }
     tem = chinese.shift();
     document.getElementById("english-p").innerHTML = tem;
-
-    //将取出的中文释义放到正确的数组里---修改1
     chinese2.push(tem);
+
+    tem = urls.shift();
+    au.src = tem;
+    au.play();
+    urls2.push(tem);
 }
 
 
@@ -173,7 +195,7 @@ function submit() {
     form.append("id", tem2);
 
     $("#submit-btn").attr("disabled");
-
+    au.play();
     //判断作答与答案是否相等
     //提交答案数据
     //{
@@ -197,7 +219,6 @@ function submit() {
                                     .attr("style", "display:none;");
                    ids2.push(tem2);  //第二轮将拼写正确的放入表示正确的数组里面
                    words2.push(tem);
-
                    //console.log(chinese);
                    //console.log(ids);
                    //console.log(words);
@@ -233,7 +254,6 @@ function submit() {
                    $("#submit-btn").removeAttr("disabled").attr("style","display:none;");;
                    words2.push(tem);
                    ids2.push(tem2);
-
 
                    //console.log(chinese);
                    //console.log(ids);
@@ -323,6 +343,7 @@ function test() {
     $("#test-btn").attr("style","display:none;");
     $("#next-btn3").css("display","none");
     $("#submit-btn2").attr("style","display:block;");
+    $("#audioContainer").attr("class","chose");
     document.getElementById("progress").innerHTML = ids.length + "/" + nums;
     nextword3();
 }
@@ -333,6 +354,8 @@ function nextword3() {
     var c_tem = chinese2.shift();
     var w_tem = words2.shift();
     var i_tem = ids2.shift();
+    var u_tem = urls2.shift();
+
     var str = "单词" + "<span class='word'>" + w_tem + "</span>" + "的中文意思是？";
     $("#title").html(str);
 
@@ -353,8 +376,6 @@ function nextword3() {
     var flag;
     for(;index < 3;){
         var t2 = Math.round(Math.random() * words3.length);
-        // console.log(words3);
-        // console.log("t2" + t2);
         if(t2 == words3.length)
             continue;
         for(j = 0;j < lis.length; j++){
@@ -369,15 +390,18 @@ function nextword3() {
                 if(flag == 1){
                     lis[j].children[1].innerHTML = chinese3[t2];
                     index ++;
-                    // console.log("index" + index);
                 }
             }
         }
     }
 
+    au.src = u_tem;
+    au.play();
+
     words.push(w_tem);
     ids.push(i_tem);
     chinese.push(c_tem);
+    urls.push(u_tem);
 }
 
 //第三轮提交（选择题,校对正确答案，提交代码已经去除）
@@ -397,39 +421,11 @@ function submit2() {
     tem = words[words.length-1];
     tem2 = ids[ids.length-1];
     tem3 = chinese[chinese.length-1];
-    // console.log(tem3);
-    // console.log("id" + tem2);
-    // console.log(ids);
-    // console.log(an);
+
+    au.play();
     //判断作答与答案是否相等
+    au.play();
     if (tem3 == an){
-        // //提交情况数据为
-        // //  {
-        // //    "id" : 题目id,
-        // //    "result" : "true"为正确，"false"为错误
-        // //  }
-        // //接口都为"/submit"
-        // var form = new FormData();
-        // form.append("id",tem2);
-        // form.append("result","true");
-        // $.ajax({
-        //     url : "/submit",
-        //     type : "POST",
-        //     data : form,
-        //     processData : false,
-        //     contentType : false,
-        //     dataType : "json",
-        //     success : function (result) {
-        //         if(result != "success"){
-        //             setErrorAlert("上传失败，请重新提交");
-        //             return false;
-        //         }
-        //     },
-        //     error : function () {
-        //         setErrorAlert("网络原因与服务器通讯失败，请重试");
-        //         return false;
-        //     }
-        // });
         for(var i = 0; i < lis.length; i++){
             if(lis[i].children[1].innerHTML == tem3){
                 lis[i].style.backgroundColor = "green";
@@ -446,30 +442,10 @@ function submit2() {
         $("#submit-btn2").attr("style","display:none;");
         $("#next-btn3").attr("style","display:block;");
     } else {
-        // var form = new FormData();
-        // form.append("id",tem2);
-        // form.append("result","false");
-        // $.ajax({
-        //     url : "/submit",
-        //     type : "POST",
-        //     data : form,
-        //     processData : false,
-        //     contentType : false,
-        //     dataType : "json",
-        //     success : function (result) {
-        //         if(result != "success"){
-        //             setErrorAlert("上传失败，请重新提交");
-        //             return false;
-        //         }
-        //     },
-        //     error : function () {
-        //         setErrorAlert("网络原因与服务器通讯失败，请重试");
-        //         return false;
-        //     }
-        // });
         words2.push(words.pop());
         ids2.push(ids.pop());
         chinese2.push(chinese.pop());
+        urls2.push(urls.pop());
         for(var i = 0; i < lis.length; i++){
             if(lis[i].children[1].innerHTML == tem3){
                 lis[i].style.backgroundColor = "green";
@@ -501,3 +477,25 @@ function setRightNotice(str) {
     $("#error").css("display","block");
     $("#error h5").text(str);
 }
+
+//禁止复制粘贴
+document.getElementById("english-p").oncopy = function(){
+    setErrorAlert("不能复制单词哦");
+    return false;
+};
+document.getElementById("answer").onpaste = function(){
+    setErrorAlert("不能粘贴答案哦");
+    return false;
+};
+
+//设置语音暂停和播放
+function play() {
+    if(au.src == undefined){
+        setErrorAlert("无法获取音频，刷新试试");
+        return false;
+    }
+    au.pause();
+    au.play();
+    au.voice = 1;
+}
+document.getElementById("play").onclick = play;
