@@ -24,7 +24,6 @@ var words3 = [];
 var chinese3 = [];
 
 var rightId=[];
-var worngId=[];
 
 var begin=0;
 var end=0;
@@ -130,7 +129,7 @@ function initContent(){
 
     tem = urls.shift();
     au.src = tem;
-    au.play();
+    au.play();   
     urls.push(tem);
 
     //取出单词并放入页面
@@ -367,32 +366,24 @@ function nextword3() {
     }
     //构建正确选项
     var t = Math.round( (Math.random() * 4) )% 4;
-    // console.log(t);
     lis[t].children[1].innerHTML = c_tem;
 
     //构建其他三个选项
-    var index = 0;
-    var j = 0;
+    var index = 0,tem;
+    var arr = [-1],add = [];
     var flag;
-    for(;index < 3;){
-        var t2 = Math.round(Math.random() * words3.length);
-        if(t2 == words3.length)
-            continue;
-        for(j = 0;j < lis.length; j++){
-            if(lis[j].children[1].innerHTML == ""){
-                flag = 1;
-                for (var k = 0; k < lis.length; k++){
-                    if( lis[k].children[1].innerHTML == chinese3[t2]){
-                        flag = 0;
-                        break;
-                    }
-                }
-                if(flag == 1){
-                    lis[j].children[1].innerHTML = chinese3[t2];
-                    index ++;
-                }
+    add.push(t);
+    while(index < 4){
+        tem = lis[index].children[1];
+        if(tem.innerHTML == ""){
+            var t2 = Math.floor(Math.random() * words3.length);
+            while(arr.indexOf(t2) != -1 || chinese3[t2] == c_tem){
+                t2 = Math.floor(Math.random() * words3.length);
             }
+            tem.innerHTML = chinese3[t2];
+            arr.push(t2);
         }
+        index++;
     }
 
     au.src = u_tem;
