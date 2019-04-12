@@ -97,8 +97,9 @@ public class TeacherController {
         HttpSession session=request.getSession();
         String account=session.getAttribute("username").toString();
         Teacher teacher=teacherDao.selectByAccount(account);
-        if (!teacher.getPassword().equals(old)){
+        if (!teacher.getPassword().equals(md5Utils.encode(old))){
             result.put("code","false");
+            result.put("msg","原来密码错误！");
         }
         else {
             teacher.setPassword(md5Utils.encode(ne));
@@ -276,12 +277,18 @@ public class TeacherController {
 
     @RequestMapping("/addUser")
     @ResponseBody
-    public  Object addUser(@RequestParam("id")String id,@RequestParam("password")String password,@RequestParam("type")String type){
+    public  Object addUser(@RequestParam("id")String id,@RequestParam("password")String password,@RequestParam("type")String type,@RequestParam(value = "managerpassword" ,required = false)String managerpassword){
         JSONObject result=new JSONObject();
         if (type.equals("teacher")){
+            Teacher manager=teacherDao.selectByAccount("managerpassword");
+            if (!md5Utils.encode(managerpassword).equals(manager.getPassword())){
+                result.put("code",0);
+                result.put("msg","管理密码错误！");
+                return result;
+            }
             Teacher teacher=new Teacher();
             teacher.setAccount(id);
-            teacher.setPassword(password);
+            teacher.setPassword(md5Utils.encode(password));
             if (teacherDao.insertSelective(teacher)==1){
                 result.put("code","success");
             }else {
@@ -305,8 +312,14 @@ public class TeacherController {
 
     @RequestMapping("/deleteStudent")
     @ResponseBody
-    public Object deleteStudent(@RequestParam("id")String id){
+    public Object deleteStudent(@RequestParam("id")String id,@RequestParam("managerpassword")String managerpassword){
         JSONObject result=new JSONObject();
+        Teacher manager=teacherDao.selectByAccount("managerpassword");
+        if (!md5Utils.encode(managerpassword).equals(manager.getPassword())){
+            result.put("code",0);
+            result.put("msg","管理密码错误！");
+            return result;
+        }
         Student student=studentDao.selectByAccount(id);
         if (studentDao.deleteByPrimaryKey(student.getId())==1){
             result.put("code",1);
@@ -320,8 +333,14 @@ public class TeacherController {
 
     @RequestMapping(value = "/resetPassword",method = RequestMethod.POST)
     @ResponseBody
-    public Object resetPassword(@RequestParam("id")String id,@RequestParam("password")String password){
+    public Object resetPassword(@RequestParam("id")String id,@RequestParam("password")String password,@RequestParam("managerpassword")String managerpassword){
         JSONObject result=new JSONObject();
+        Teacher manager=teacherDao.selectByAccount("managerpassword");
+        if (!md5Utils.encode(managerpassword).equals(manager.getPassword())){
+            result.put("code",0);
+            result.put("msg","管理密码错误！");
+            return result;
+        }
         Student s=studentDao.selectByAccount(id);
         s.setPassword(md5Utils.encode(password));
         studentDao.updateByPrimaryKeySelective(s);

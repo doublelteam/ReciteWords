@@ -383,11 +383,11 @@ document.getElementById('yes').onclick = function() {
                 $("#oldpassword").val("");
                 $("#newpassword").val("");
                 $("#newpassword2").val("");
-                Alert("修改成功！")
+                setRightNotice("修改成功！")
                 document.getElementById('changePassword').style.display = "none";
                 $("#oout2").show(600);
             }else {
-                setErrorAlert("原密码错误，修改失败！");
+                setErrorAlert(result.msg);
                 $("#oldpassword").val("");
                 $("#newpassword").val("");
                 $("#newpassword2").val("");
@@ -688,6 +688,7 @@ function Delete() {
         }
     });
 }
+
 
 //修改密码
 function resetPassword() {

@@ -59,6 +59,7 @@ public class ExamController {
             js.put("id",wordsList.get(n).getId());
             js.put("chinese",wordsList.get(n).getChinese());
             js.put("english",wordsList.get(n).getEnglish());
+            js.put("urls","http://47.105.151.156/142000words/"+wordsList.get(n).getEnglish().replaceAll(" ","%")+".wav");
             result.add(js);
             count+=1;
         }
